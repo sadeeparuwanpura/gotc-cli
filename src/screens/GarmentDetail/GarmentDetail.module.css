@@ -1,0 +1,232 @@
+/* --- sticky sub-header ------------------------------------------------ */
+
+.subHeader {
+  position: sticky;
+  top: var(--top-bar-h);
+  z-index: 30;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+
+.subHeaderInner {
+  padding: 13px var(--screen-pad-x) var(--card-pad-tight);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.identity {
+  display: flex;
+  align-items: baseline;
+  gap: var(--gap-4);
+}
+
+.garmentName {
+  font-size: var(--text-garment);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-garment);
+}
+
+.styleNumber {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: var(--weight-medium);
+  color: var(--ink-soft);
+}
+
+.meta {
+  display: flex;
+  margin-top: 7px;
+  font-size: var(--text-dense);
+  color: var(--ink-soft);
+}
+
+.metaItem {
+  padding: 0 var(--card-pad-tight);
+  border-left: 1px solid var(--line);
+}
+
+.metaItem:first-child {
+  padding-left: 0;
+  padding-right: var(--card-pad-tight);
+  border-left: 0;
+}
+
+.metaFigure {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-3);
+  flex: none;
+}
+
+.body {
+  padding: 0 var(--screen-pad-x) var(--screen-pad-bottom);
+}
+
+/* --- summary strip ---------------------------------------------------- */
+
+.summary {
+  display: grid;
+  grid-template-columns: 246px 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  margin-top: var(--gap-6);
+}
+
+.conePanel {
+  background: var(--ink);
+  color: var(--on-ink);
+  padding: var(--card-pad) 16px 15px;
+}
+
+.coneLabel {
+  font-size: var(--text-meta);
+  color: var(--on-ink-soft);
+}
+
+.coneFigure {
+  display: flex;
+  align-items: baseline;
+  gap: var(--gap-3);
+  margin-top: 2px;
+}
+
+.coneValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-hero);
+  font-weight: var(--weight-medium);
+  line-height: 1;
+  letter-spacing: var(--tracking-hero);
+}
+
+.coneUnit {
+  font-size: var(--text-dense);
+  color: var(--on-ink-soft);
+}
+
+.coneNote {
+  font-size: var(--text-meta);
+  color: var(--on-ink-soft);
+  margin-top: var(--gap-3);
+  line-height: 1.5;
+}
+
+.stats {
+  background: var(--paper);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.stat {
+  padding: var(--card-pad) 16px;
+  border-left: 1px solid var(--line-2);
+}
+
+.stat:first-child {
+  border-left: 0;
+}
+
+.statLabel {
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-stat);
+  font-weight: var(--weight-medium);
+  margin-top: var(--gap-1);
+  display: inline-block;
+}
+
+.statNote {
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+  margin-top: 5px;
+}
+
+.statTokens {
+  display: flex;
+  gap: 3px;
+  margin-top: var(--gap-3);
+}
+
+/* --- body grid: section rail + sections -------------------------------- */
+
+.layout {
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  gap: var(--gap-7);
+  margin-top: var(--gap-7);
+  align-items: start;
+}
+
+.rail {
+  position: sticky;
+  top: calc(var(--top-bar-h) + 92px);
+  display: grid;
+}
+
+.railLink {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-3);
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line-2);
+  font-size: var(--text-dense);
+  color: var(--ink-2);
+  text-align: left;
+}
+
+.railLink:hover {
+  color: var(--ink);
+}
+
+.railCount {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  color: var(--ink-faint);
+}
+
+.sections {
+  display: grid;
+  gap: 34px;
+}
+
+/* --- garment information ---------------------------------------------- */
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px 24px;
+}
+
+.infoItem {
+  display: flex;
+  gap: var(--gap-3);
+  font-size: var(--text-body);
+  border-bottom: 1px solid var(--line-4);
+  padding-bottom: 7px;
+}
+
+.infoLabel {
+  color: var(--ink-soft);
+  min-width: 116px;
+}
+
+.infoValue {
+  font-weight: var(--weight-medium);
+}
+
+.infoFull {
+  grid-column: 1 / -1;
+}

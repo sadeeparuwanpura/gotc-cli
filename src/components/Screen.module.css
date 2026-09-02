@@ -1,0 +1,103 @@
+.screen {
+  padding: var(--screen-pad-y) var(--screen-pad-x) var(--screen-pad-bottom);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  margin-bottom: var(--gap-6);
+}
+
+.title {
+  font-size: var(--text-title);
+  font-weight: var(--weight-semibold);
+}
+
+.subline {
+  font-size: var(--text-dense);
+  color: var(--ink-soft);
+  margin-top: 3px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-3);
+  flex: none;
+}
+
+/* Cards and tables have square corners — never round them. */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+
+.cardHeader {
+  background: var(--paper-alt);
+  border-bottom: 1px solid var(--line);
+  padding: var(--gap-4) var(--cell-x-edge);
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-5);
+}
+
+.cardHeaderNote {
+  font-size: var(--text-meta);
+  font-weight: var(--weight-regular);
+  color: var(--ink-soft);
+}
+
+.cardBody {
+  padding: var(--card-pad);
+}
+
+.footNote {
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+  margin-top: var(--gap-4);
+}
+
+/* Section heading sitting on its 1.5px ink rule. */
+.sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-5);
+  border-bottom: var(--rule-section) solid var(--ink);
+  padding-bottom: var(--gap-2);
+  margin-bottom: var(--gap-5);
+}
+
+.sectionTitle {
+  font-size: var(--text-section);
+  font-weight: var(--weight-semibold);
+}
+
+.sectionHint {
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+}
+
+/* Empty states — every table has one. */
+.empty {
+  padding: 44px var(--card-pad) 48px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: var(--text-section);
+  font-weight: var(--weight-semibold);
+}
+
+.emptyBody {
+  font-size: var(--text-body);
+  color: var(--ink-soft);
+  margin: var(--gap-2) auto var(--gap-6);
+  max-width: 52ch;
+  line-height: 1.6;
+}

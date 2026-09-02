@@ -1,0 +1,91 @@
+.base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-size: var(--text-body);
+  padding: 7px 12px;
+  white-space: nowrap;
+  transition: background-color 0.06s linear, border-color 0.06s linear, color 0.06s linear;
+}
+
+.base:disabled {
+  opacity: 0.45;
+}
+
+/* Primary — ink fill, accent on hover. */
+.ink {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--on-ink);
+  font-weight: var(--weight-medium);
+}
+
+.ink:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Secondary — ink outline on paper. */
+.outline {
+  border-color: var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+}
+
+.outline:hover:not(:disabled) {
+  background: var(--desk);
+}
+
+/* Quiet — hairline outline, ink border on hover. */
+.quiet {
+  border-color: var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.quiet:hover:not(:disabled) {
+  border-color: var(--ink);
+}
+
+/* Outline that inverts to ink — "+ Add operation", "+ Add fabric". */
+.invert {
+  border-color: var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+}
+
+.invert:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+.ok {
+  border-color: var(--ok);
+  background: var(--ok);
+  color: var(--on-ink);
+  font-weight: var(--weight-medium);
+}
+
+.ok:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+.danger {
+  border-color: var(--line);
+  background: var(--paper);
+  color: var(--danger);
+  font-weight: var(--weight-medium);
+}
+
+.danger:hover:not(:disabled) {
+  border-color: var(--danger);
+}
+
+.full {
+  width: 100%;
+}

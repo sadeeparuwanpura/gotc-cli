@@ -1,0 +1,188 @@
+.assumptions {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--gap-6);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  padding: var(--card-pad-tight) var(--cell-x-edge);
+}
+
+.assumptionsLabel {
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+  padding-bottom: 6px;
+}
+
+.assumptionField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-2);
+}
+
+.assumptionLabel {
+  font-size: var(--text-meta-lg);
+  font-weight: var(--weight-medium);
+  color: var(--ink-soft);
+}
+
+.assumptionInput {
+  width: 108px;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: var(--text-input);
+  padding: 5px var(--gap-3);
+}
+
+.assumptionNote {
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+  padding-bottom: 6px;
+  margin-left: auto;
+}
+
+.table {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font-size: var(--text-body);
+}
+
+.table thead th {
+  background: var(--paper-alt);
+  font-size: var(--text-meta-lg);
+  font-weight: var(--weight-medium);
+  color: var(--ink-soft);
+  text-align: left;
+  padding: var(--cell-y) var(--cell-x);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: var(--cell-y) var(--cell-x);
+  border-bottom: 1px solid var(--line-3);
+}
+
+.table thead th:first-child,
+.table td:first-child {
+  padding-left: var(--cell-x-edge);
+}
+
+.table thead th:last-child,
+.table td:last-child {
+  padding-right: var(--cell-x-edge);
+}
+
+.right {
+  text-align: right;
+}
+
+.threadCell {
+  display: flex;
+  align-items: baseline;
+  gap: var(--gap-3);
+}
+
+.expander {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+}
+
+.expander:hover {
+  color: var(--ink);
+}
+
+.brand {
+  font-weight: var(--weight-semibold);
+}
+
+.threadMeta {
+  color: var(--ink-soft);
+  font-size: var(--text-dense);
+}
+
+.cones {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: var(--weight-semibold);
+}
+
+/* The working, shown under every thread row. */
+.workingRow td {
+  background: var(--paper-alt);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-lg);
+  color: var(--ink-2);
+  padding: var(--gap-2) var(--cell-x-edge);
+  border-bottom: 1px solid var(--line-3);
+}
+
+.consumerRow td {
+  background: var(--paper-alt);
+  padding: var(--gap-3) var(--cell-x-edge) var(--gap-4);
+}
+
+.consumers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0 var(--gap-6);
+}
+
+.consumer {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-3);
+  font-size: var(--text-dense);
+  padding: var(--gap-2) 0;
+  border-bottom: 1px solid var(--line-4);
+}
+
+.consumerName {
+  color: var(--ink-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.consumerPosition {
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+}
+
+.yieldInput {
+  width: 96px;
+  margin-left: auto;
+}
+
+.yieldCell {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Final row on ink. */
+.totalRow td {
+  background: var(--ink);
+  color: var(--on-ink);
+  border-bottom: 0;
+  padding: 9px var(--cell-x);
+}
+
+.totalRow td:first-child {
+  padding-left: var(--cell-x-edge);
+}
+
+.totalRow td:last-child {
+  padding-right: var(--cell-x-edge);
+}
+
+.totalLabel {
+  font-weight: var(--weight-medium);
+}
+
+.totalUnit {
+  color: var(--on-ink-soft);
+  font-size: var(--text-meta);
+}

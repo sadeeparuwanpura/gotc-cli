@@ -1,0 +1,126 @@
+/**
+ * Every colour, size and spacing value in GOTC.
+ *
+ * If a value is missing here, add it — never hard-code it in a CSS module.
+ * Source: handoff README.md §DESIGN_TOKENS.
+ */
+
+:root {
+  /* --- surfaces ------------------------------------------------------- */
+  --desk: #f2f3f4;
+  --paper: #ffffff;
+  --paper-alt: #fafafb;
+
+  /* --- ink ------------------------------------------------------------ */
+  --ink: #16191c;
+  --ink-2: #3d4247;
+  --ink-soft: #5b6167;
+  --ink-faint: #8b9199;
+
+  /* --- hairlines ------------------------------------------------------ */
+  --line-strong: #b7bcc2;
+  --line: #d7dade;
+  --line-2: #e6e8ea;
+  --line-3: #edeef0;
+  --line-4: #f1f2f4;
+  --top-bar-line: #2b2f34;
+  --top-bar-line-2: #3a3e43;
+
+  /* --- on dark -------------------------------------------------------- */
+  --on-ink: #ffffff;
+  --on-ink-soft: #9ba1a8;
+  --on-ink-faint: #6b7178;
+
+  /* --- meaning -------------------------------------------------------- */
+  --accent: #2f5bd0;
+  --warn: #b4560f;
+  --warn-bg: #fbeade;
+  --ok: #17795a;
+  --ok-bg: #e2f2ec;
+  --danger: #a83070;
+  --flash: #ffe9a8;
+
+  /* --- order status --------------------------------------------------- */
+  --status-draft: #5b6167;
+  --status-pending: #b4560f;
+  --status-approved: #17795a;
+  --status-ordered: #16191c;
+  --status-rejected: #a83070;
+
+  /* --- type ----------------------------------------------------------- */
+  --font-ui: 'Archivo', 'Helvetica Neue', Helvetica, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --text-micro: 9.5px;
+  --text-meta: 11px;
+  --text-meta-lg: 11.5px;
+  --text-dense: 12px;
+  --text-body: 12.5px;
+  --text-input: 13px;
+  --text-button: 13.5px;
+  --text-section: 14.5px;
+  --text-title: 17px;
+  --text-sign-in: 19px;
+  --text-order-code: 20px;
+  --text-garment: 21px;
+  --text-stat: 24px;
+  --text-hero: 52px;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --tracking-micro: 0.1em;
+  --tracking-print: 0.04em;
+  --tracking-garment: -0.01em;
+  --tracking-hero: -0.02em;
+
+  /* --- geometry ------------------------------------------------------- */
+  --radius-small: 3px;
+  --radius: 4px;
+  --radius-round: 50%;
+
+  --rule-section: 1.5px;
+  --rule-print: 2px;
+
+  /* --- spacing -------------------------------------------------------- */
+  --cell-y: 8px;
+  --cell-x-edge: 14px;
+  --cell-x: 10px;
+  --cell-print-y: 6px;
+  --cell-print-x: 8px;
+  --card-pad: 14px;
+  --card-pad-tight: 12px;
+  --screen-pad-y: 22px;
+  --screen-pad-x: 24px;
+  --screen-pad-bottom: 64px;
+
+  --gap-1: 4px;
+  --gap-2: 6px;
+  --gap-3: 8px;
+  --gap-4: 10px;
+  --gap-5: 14px;
+  --gap-6: 18px;
+  --gap-7: 22px;
+
+  /* --- shell ---------------------------------------------------------- */
+  --top-bar-h: 48px;
+  --sidebar-w: 212px;
+  --min-app-w: 1180px;
+
+  /* rows */
+  --row-h: 38px;
+  --row-h-lib: 40px;
+  --row-h-order: 42px;
+
+  /* --- print sheet ---------------------------------------------------- */
+  --sheet-w: 1123px;
+  --sheet-h: 794px;
+  --sheet-pad-y: 40px;
+  --sheet-pad-x: 44px;
+
+  /* --- motion --------------------------------------------------------- */
+  --flash-fade: 0.7s;
+  --row-flash: 0.75s;
+}

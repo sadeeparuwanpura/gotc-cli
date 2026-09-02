@@ -1,0 +1,36 @@
+/**
+ * Both sheets print on one A4 landscape page: hide the shell and the desk chrome, drop
+ * the page's own border, fixed width and padding so it flows onto the paper.
+ */
+
+@page {
+  size: A4 landscape;
+  margin: 11mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #ffffff;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Anything marked as screen-only chrome disappears. */
+  [data-print='hide'] {
+    display: none !important;
+  }
+
+  /* Long tables paginate naturally and repeat their headers. */
+  thead {
+    display: table-header-group;
+  }
+
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+}

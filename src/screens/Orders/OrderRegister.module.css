@@ -1,0 +1,77 @@
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-5);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  padding: var(--card-pad-tight) var(--cell-x-edge);
+}
+
+.chips {
+  display: flex;
+  gap: var(--gap-2);
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+  padding: 4px var(--gap-3);
+  font-size: var(--text-dense);
+  background: var(--paper);
+}
+
+.chip:hover {
+  border-color: var(--ink);
+}
+
+.chipActive {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--on-ink);
+}
+
+.chipDot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--radius-round);
+  flex: none;
+}
+
+.chipCount {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  color: var(--ink-faint);
+}
+
+.chipActive .chipCount {
+  color: var(--on-ink-soft);
+}
+
+.search {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-4);
+}
+
+.searchInput {
+  width: 232px;
+  font-size: var(--text-dense);
+  padding: 5px var(--gap-3);
+}
+
+.resultCount {
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.resultFigure {
+  font-family: var(--font-mono);
+  color: var(--ink);
+}

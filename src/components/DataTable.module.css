@@ -1,0 +1,129 @@
+/**
+ * Real <table> elements with <thead>/<tbody>. A table is never card-ified — this is a
+ * desktop tool with a 1180px minimum width.
+ */
+
+.table {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  font-size: var(--text-body);
+}
+
+/* Sits directly under a card header, so it drops its own top border. */
+.attached {
+  border-top: 0;
+}
+
+.table thead th {
+  background: var(--paper-alt);
+  font-size: var(--text-meta-lg);
+  font-weight: var(--weight-medium);
+  color: var(--ink-soft);
+  text-align: left;
+  padding: var(--cell-y) var(--cell-x);
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.table thead th:first-child,
+.table tbody td:first-child {
+  padding-left: var(--cell-x-edge);
+}
+
+.table thead th:last-child,
+.table tbody td:last-child {
+  padding-right: var(--cell-x-edge);
+}
+
+.table tbody td {
+  padding: var(--cell-y) var(--cell-x);
+  border-bottom: 1px solid var(--line-3);
+  color: var(--ink-2);
+  vertical-align: middle;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.hoverRows tbody tr:hover td {
+  background: var(--paper-alt);
+}
+
+.clickRows tbody tr {
+  cursor: pointer;
+}
+
+.right {
+  text-align: right;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.strong {
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+}
+
+.soft {
+  color: var(--ink-soft);
+}
+
+.faint {
+  color: var(--ink-faint);
+}
+
+/* Row heights per screen. */
+.rowsLibrary tbody td {
+  height: var(--row-h-lib);
+}
+
+.rowsOrders tbody td {
+  height: var(--row-h-order);
+}
+
+/* Two-line cell: a name over a mono date. */
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.stackDate {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-soft);
+}
+
+/* Wrapping hairline chips — garment parts. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-1);
+}
+
+.chip {
+  font-size: var(--text-meta);
+  border: 1px solid var(--line-2);
+  background: var(--paper-alt);
+  border-radius: var(--radius-small);
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+
+/* Skeleton rows match the real row height so nothing jumps on load. */
+.skeleton {
+  height: 9px;
+  background: var(--line-3);
+  border-radius: 2px;
+  width: 70%;
+}
+
+.emptyRow td {
+  padding: 30px var(--cell-x-edge);
+  text-align: center;
+  color: var(--ink-soft);
+}

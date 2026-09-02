@@ -1,0 +1,26 @@
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--gap-5);
+}
+
+.rowActions {
+  display: flex;
+  gap: var(--gap-5);
+  justify-content: flex-end;
+}
+
+.action {
+  font-size: var(--text-body);
+  color: var(--accent);
+  padding: 0;
+}
+
+.action:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+/* An action that cannot run greys out rather than disappearing. */
+.actionLocked {
+  color: var(--ink-faint);
+}

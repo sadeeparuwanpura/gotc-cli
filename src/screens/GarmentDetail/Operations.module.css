@@ -1,0 +1,330 @@
+/* Fixed column widths keep the rows aligned as inputs appear on hover. */
+.table {
+  table-layout: fixed;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 0;
+  font-size: var(--text-body);
+}
+
+.table thead th {
+  background: var(--paper-alt);
+  font-size: var(--text-meta-lg);
+  font-weight: var(--weight-medium);
+  color: var(--ink-soft);
+  text-align: left;
+  padding: var(--cell-y) var(--cell-x);
+  border-bottom: 1px solid var(--line);
+}
+
+.table tbody td {
+  padding: 0 var(--cell-x);
+  border-bottom: 1px solid var(--line-3);
+  height: var(--row-h);
+  vertical-align: middle;
+}
+
+.table thead th:first-child,
+.table tbody td:first-child {
+  padding-left: var(--cell-x-edge);
+}
+
+.table thead th:last-child,
+.table tbody td:last-child {
+  padding-right: var(--cell-x-edge);
+}
+
+.row:hover > td {
+  background: var(--paper-alt);
+}
+
+.rowDragging > td {
+  opacity: 0.45;
+}
+
+.colSeq {
+  width: 52px;
+}
+.colMachine {
+  width: 214px;
+}
+.colSeam {
+  width: 92px;
+}
+.colThread {
+  width: 314px;
+}
+.colActions {
+  width: 74px;
+}
+
+/* --- # cell ------------------------------------------------------------ */
+
+.seqCell {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2);
+}
+
+.handle {
+  font-family: var(--font-mono);
+  color: var(--ink-faint);
+  cursor: grab;
+  padding: 2px;
+  line-height: 1;
+}
+
+.handle:active {
+  cursor: grabbing;
+}
+
+.seq {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- machine cell ------------------------------------------------------ */
+
+.machineCell {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-3);
+}
+
+.machineSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-small);
+  flex: none;
+  background: var(--line-2);
+}
+
+.machineSelect {
+  flex: 1;
+  min-width: 0;
+  appearance: none;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: var(--text-body);
+  padding: 4px 6px;
+  border-radius: var(--radius-small);
+}
+
+.machineSelect:hover:not(:disabled),
+.machineSelect:focus {
+  border-color: var(--line);
+  background: var(--paper);
+}
+
+/* --- seam cell --------------------------------------------------------- */
+
+.seamInput {
+  width: 100%;
+  text-align: right;
+  font-family: var(--font-mono);
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: var(--text-body);
+  padding: 4px 6px;
+  border-radius: var(--radius-small);
+}
+
+.seamInput:hover:not(:disabled),
+.seamInput:focus {
+  border-color: var(--line);
+  background: var(--paper);
+}
+
+.seamError {
+  font-size: 10.5px;
+  color: var(--warn);
+  text-align: right;
+  padding-right: 6px;
+}
+
+/* --- thread cell ------------------------------------------------------- */
+
+.threadSummary {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-lg);
+  color: var(--ink-2);
+  letter-spacing: -0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.incomplete {
+  display: inline-block;
+  margin-left: var(--gap-2);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  color: var(--warn);
+  border: 1px solid var(--warn);
+  border-radius: var(--radius-small);
+  padding: 0 5px;
+  white-space: nowrap;
+}
+
+/* --- actions ----------------------------------------------------------- */
+
+.actionCell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--gap-3);
+}
+
+.toggle {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.toggle:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+.delete {
+  color: var(--ink-faint);
+  font-size: var(--text-dense);
+}
+
+.delete:hover:not(:disabled) {
+  color: var(--danger);
+}
+
+/* --- expanded thread panel --------------------------------------------- */
+
+.panelRow > td {
+  padding: 0;
+  height: auto;
+  background: var(--paper-alt);
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: 1fr 268px;
+  gap: var(--gap-6);
+  padding: var(--card-pad) 16px;
+  border-left: 3px solid var(--machine-colour, var(--line));
+}
+
+.panelHeading {
+  font-size: var(--text-dense);
+  color: var(--ink-soft);
+  margin-bottom: var(--gap-4);
+}
+
+.positionTable {
+  width: 100%;
+  background: var(--paper);
+  border: 1px solid var(--line-2);
+  font-size: var(--text-body);
+}
+
+.positionTable th {
+  background: var(--paper-alt);
+  font-size: var(--text-meta);
+  font-weight: var(--weight-medium);
+  color: var(--ink-soft);
+  text-align: left;
+  padding: var(--gap-2) var(--gap-3);
+  border-bottom: 1px solid var(--line-2);
+}
+
+.positionTable td {
+  padding: var(--gap-2) var(--gap-3);
+  border-bottom: 1px solid var(--line-4);
+}
+
+.positionTable tr:last-child td {
+  border-bottom: 0;
+}
+
+.threadSelect {
+  width: 100%;
+  font-size: var(--text-dense);
+  padding: 4px var(--gap-2);
+}
+
+.notesLabel {
+  font-size: var(--text-meta-lg);
+  font-weight: var(--weight-medium);
+  color: var(--ink-soft);
+  margin-bottom: var(--gap-2);
+}
+
+.notes {
+  width: 100%;
+  min-height: 74px;
+  resize: vertical;
+  font-family: inherit;
+  font-size: var(--text-dense);
+  padding: var(--gap-2) var(--gap-3);
+}
+
+.operationTotal {
+  border-top: 1px solid var(--line-2);
+  margin-top: var(--gap-4);
+  padding-top: var(--gap-3);
+  font-size: var(--text-dense);
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-3);
+}
+
+.operationTotalValue {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+}
+
+/* --- inline thread creation -------------------------------------------- */
+
+.newThread {
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  padding: var(--card-pad-tight);
+  margin-top: var(--gap-4);
+}
+
+.newThreadGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--gap-3);
+}
+
+.newThreadActions {
+  display: flex;
+  gap: var(--gap-3);
+  margin-top: var(--gap-4);
+}
+
+.newThreadError {
+  font-size: 10.5px;
+  color: var(--warn);
+  margin-top: var(--gap-2);
+}
+
+/* --- below the table ---------------------------------------------------- */
+
+.tableFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-5);
+  margin-top: var(--gap-5);
+}
+
+.changeovers {
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+}
+
+.changeoverCount {
+  font-family: var(--font-mono);
+  color: var(--ink);
+}

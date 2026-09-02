@@ -1,0 +1,37 @@
+/* Garment status: a plain hairline pill. */
+.garment {
+  display: inline-block;
+  font-size: var(--text-meta);
+  font-weight: var(--weight-medium);
+  padding: 2px 7px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-small);
+  white-space: nowrap;
+}
+
+/* Order status: outlined and coloured by status, with a 6px dot. */
+.order {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-2);
+  font-size: var(--text-meta-lg);
+  font-weight: var(--weight-medium);
+  padding: 3px 8px;
+  border: 1px solid currentColor;
+  border-radius: var(--radius-small);
+  white-space: nowrap;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-round);
+  background: currentColor;
+  flex: none;
+}
+
+/* Filter chips carry a slightly larger dot. */
+.chipDot {
+  width: 7px;
+  height: 7px;
+}

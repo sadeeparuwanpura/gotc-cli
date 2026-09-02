@@ -1,0 +1,162 @@
+/* The desk chrome above a printable page — never printed. */
+.desk {
+  padding: var(--screen-pad-y) var(--screen-pad-x) var(--screen-pad-bottom);
+}
+
+.chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-5);
+  margin-bottom: var(--gap-6);
+}
+
+.chromeLabel {
+  font-size: var(--text-dense);
+  color: var(--ink-soft);
+}
+
+.chromeActions {
+  display: flex;
+  gap: var(--gap-3);
+}
+
+/**
+ * A4 landscape at 96dpi. On paper the page drops its border, fixed width and padding so
+ * it flows onto the sheet.
+ */
+.sheet {
+  background: #ffffff;
+  color: #000000;
+  border: 1px solid var(--line);
+  width: var(--sheet-w);
+  min-height: var(--sheet-h);
+  padding: var(--sheet-pad-y) var(--sheet-pad-x);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--gap-7);
+  border-bottom: var(--rule-print) solid #000000;
+  padding-bottom: var(--gap-4);
+}
+
+.title {
+  font-size: 19px;
+  font-weight: var(--weight-bold);
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  font-size: var(--text-body);
+  margin-top: var(--gap-2);
+}
+
+.headRight {
+  text-align: right;
+  font-size: var(--text-dense);
+}
+
+.headMono {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-lg);
+  margin-top: 3px;
+}
+
+.stamp {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta-lg);
+  margin-top: var(--gap-2);
+}
+
+/* Dense print table. */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: var(--gap-5);
+}
+
+.table thead th {
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-print);
+  text-align: left;
+  padding: var(--cell-print-y) var(--cell-print-x);
+  border-bottom: 1px solid #000000;
+  white-space: nowrap;
+}
+
+.table tbody td {
+  padding: var(--cell-print-y) var(--cell-print-x);
+  border-bottom: 1px solid #c9ccd0;
+  vertical-align: top;
+}
+
+.dense {
+  font-size: 12px;
+}
+
+.right {
+  text-align: right;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.strong {
+  font-weight: var(--weight-semibold);
+}
+
+/* PURCHASE SUMMARY sits below its own 2px rule. */
+.summaryRule {
+  border-top: var(--rule-print) solid #000000;
+  margin-top: var(--gap-7);
+  padding-top: var(--gap-4);
+}
+
+.summaryLabel {
+  font-size: 11px;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-print);
+}
+
+.totalRow td {
+  border-top: 1px solid #000000;
+  border-bottom: var(--rule-print) solid #000000;
+  font-weight: var(--weight-bold);
+}
+
+/* Footer pinned to the bottom of the page above a 1px black rule. */
+.footer {
+  margin-top: auto;
+  padding-top: var(--gap-3);
+  border-top: 1px solid #000000;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--gap-5);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+}
+
+@media print {
+  .desk {
+    padding: 0;
+  }
+
+  .sheet {
+    border: 0;
+    width: auto;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+  }
+}

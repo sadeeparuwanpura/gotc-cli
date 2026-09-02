@@ -1,0 +1,158 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--desk);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  font-size: var(--text-body);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure {
+  margin: 0;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Depth comes from hairlines and ink surfaces — never a shadow. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+input,
+select,
+textarea {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/**
+ * Every number in the system is set in the mono face — style numbers, tickets, metres,
+ * cone counts, quantities, dates, sequence numbers, ratios. This is the core
+ * typographic rule; use the <Num> component or this class, never the UI face.
+ */
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Small caps micro-labels: sidebar groups, print labels, "SIGN IN AS". */
+.microLabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-micro);
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+/* A one-frame pulse on any figure whose inputs just changed. */
+@keyframes gotc-flash {
+  from {
+    background-color: var(--flash);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.flash {
+  animation: gotc-flash var(--flash-fade) ease-out;
+}
+
+@keyframes gotc-row-flash {
+  0%,
+  60% {
+    background-color: var(--flash);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.rowFlash {
+  animation: gotc-row-flash var(--row-flash) ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flash,
+  .rowFlash {
+    animation: none;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

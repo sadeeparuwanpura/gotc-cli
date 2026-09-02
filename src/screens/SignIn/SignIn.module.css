@@ -1,0 +1,160 @@
+.page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+/* --- left: the ink panel ---------------------------------------------- */
+
+.panel {
+  background: var(--ink);
+  color: var(--on-ink);
+  padding: 56px 56px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--gap-7);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-4);
+}
+
+.mark {
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid var(--on-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-dense);
+  font-weight: var(--weight-semibold);
+  flex: none;
+}
+
+.wordmark {
+  font-family: var(--font-mono);
+  font-size: var(--text-input);
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.08em;
+}
+
+.headline {
+  font-size: 38px;
+  line-height: 1.12;
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-hero);
+  max-width: 15ch;
+}
+
+.lede {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--on-ink-soft);
+  margin-top: var(--gap-6);
+  max-width: 46ch;
+}
+
+.counts {
+  display: flex;
+  gap: 40px;
+  border-top: 1px solid var(--top-bar-line-2);
+  padding-top: var(--gap-6);
+  margin-top: var(--gap-7);
+}
+
+.countValue {
+  font-family: var(--font-mono);
+  font-size: 20px;
+  font-weight: var(--weight-medium);
+  line-height: 1.1;
+}
+
+.countLabel {
+  font-size: var(--text-meta);
+  color: var(--ink-faint);
+  margin-top: var(--gap-1);
+}
+
+.footnote {
+  font-size: var(--text-meta);
+  color: var(--on-ink-faint);
+}
+
+/* --- right: the form -------------------------------------------------- */
+
+.formSide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 40px;
+  background: var(--paper);
+}
+
+.form {
+  width: 100%;
+  max-width: 352px;
+}
+
+.heading {
+  font-size: var(--text-sign-in);
+  font-weight: var(--weight-semibold);
+}
+
+.subline {
+  font-size: var(--text-body);
+  color: var(--ink-soft);
+  margin-top: var(--gap-2);
+  margin-bottom: var(--gap-7);
+}
+
+.field {
+  margin-bottom: var(--gap-5);
+}
+
+.label {
+  display: block;
+  font-size: var(--text-meta-lg);
+  font-weight: var(--weight-medium);
+  color: var(--ink-soft);
+  margin-bottom: var(--gap-2);
+}
+
+.input {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-input);
+  padding: 8px var(--gap-4);
+}
+
+.error {
+  border: 1px solid var(--warn);
+  background: var(--warn-bg);
+  font-size: var(--text-dense);
+  padding: 8px var(--gap-4);
+  margin-bottom: var(--gap-5);
+  line-height: 1.5;
+}
+
+.submit {
+  width: 100%;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: var(--text-button);
+  font-weight: var(--weight-medium);
+  padding: var(--gap-4) var(--gap-5);
+  border-radius: var(--radius);
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.submit:disabled {
+  opacity: 0.55;
+}

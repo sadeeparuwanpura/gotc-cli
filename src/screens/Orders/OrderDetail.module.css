@@ -1,0 +1,74 @@
+.chrome {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  padding: 13px var(--screen-pad-x) var(--card-pad-tight);
+}
+
+.chromeTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.identity {
+  display: flex;
+  align-items: baseline;
+  gap: var(--gap-4);
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--text-order-code);
+  font-weight: var(--weight-semibold);
+}
+
+.garmentName {
+  font-size: var(--text-section);
+  font-weight: var(--weight-medium);
+}
+
+.styleNumber {
+  font-family: var(--font-mono);
+  font-size: var(--text-body);
+  color: var(--ink-soft);
+}
+
+.meta {
+  display: flex;
+  margin-top: 7px;
+  font-size: var(--text-dense);
+  color: var(--ink-soft);
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  padding: 0 var(--card-pad-tight);
+  border-left: 1px solid var(--line);
+}
+
+.metaItem:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.metaFigure {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-3);
+  flex: none;
+}
+
+.noteStrip {
+  border-top: 1px solid var(--line-2);
+  margin-top: var(--card-pad-tight);
+  padding-top: var(--gap-3);
+  font-size: var(--text-dense);
+  color: var(--ink-2);
+}

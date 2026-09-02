@@ -1,0 +1,68 @@
+.notice {
+  border: 1px solid;
+  padding: 9px 13px;
+  font-size: var(--text-body);
+  line-height: 1.55;
+  margin-top: var(--gap-5);
+}
+
+.success {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+}
+
+.warning {
+  border-color: var(--warn);
+  background: var(--warn-bg);
+}
+
+/* The blocked banner: a mono tag, then the message. */
+.blocked {
+  border-color: var(--warn);
+  background: var(--warn-bg);
+  padding: 11px 13px;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-5);
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--warn);
+  padding-top: 2px;
+  flex: none;
+}
+
+.blockedBody {
+  font-size: var(--text-body);
+  line-height: 1.55;
+}
+
+.count {
+  font-weight: var(--weight-semibold);
+}
+
+.aside {
+  color: var(--ink-soft);
+  margin-top: 3px;
+}
+
+.link {
+  color: var(--accent);
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.separator {
+  color: var(--ink-soft);
+}

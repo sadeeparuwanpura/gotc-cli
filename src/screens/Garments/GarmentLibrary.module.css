@@ -1,0 +1,15 @@
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-5);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  padding: var(--card-pad-tight) var(--cell-x-edge);
+}
+
+.searchInput {
+  width: 280px;
+  font-size: var(--text-dense);
+  padding: 5px var(--gap-3);
+}

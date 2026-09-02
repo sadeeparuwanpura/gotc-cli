@@ -1,0 +1,34 @@
+/* The only decorative colour in the app; it always comes from the machine-type record. */
+.token {
+  display: inline-block;
+  width: 13px;
+  height: 8px;
+  border-radius: 2px;
+  flex: none;
+}
+
+.wide {
+  width: 14px;
+}
+
+.row {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-5);
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+}

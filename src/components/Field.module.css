@@ -1,0 +1,110 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-2);
+}
+
+.label {
+  font-size: var(--text-meta-lg);
+  font-weight: var(--weight-medium);
+  color: var(--ink-soft);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  font-size: var(--text-input);
+  padding: 6px var(--gap-3);
+  line-height: 16px;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.right {
+  text-align: right;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 52px;
+  font-family: inherit;
+}
+
+.select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink-soft) 50%),
+    linear-gradient(135deg, var(--ink-soft) 50%, transparent 50%);
+  background-position: calc(100% - 14px) calc(50% + 1px), calc(100% - 9px) calc(50% + 1px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 26px;
+}
+
+.hint {
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+}
+
+.fieldError {
+  font-size: 10.5px;
+  color: var(--warn);
+}
+
+/* Bordered-in-ink form panel above a table. */
+.panel {
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  margin-bottom: var(--gap-6);
+}
+
+.panelHead {
+  padding: var(--gap-4) var(--cell-x-edge);
+  border-bottom: 1px solid var(--line-2);
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+}
+
+.panelBody {
+  padding: var(--card-pad);
+  display: grid;
+  gap: var(--gap-5);
+}
+
+.panelActions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-3);
+  padding: 0 var(--card-pad) var(--card-pad);
+}
+
+.errorBox {
+  border: 1px solid var(--warn);
+  background: var(--warn-bg);
+  font-size: var(--text-dense);
+  padding: 8px var(--gap-4);
+  line-height: 1.5;
+}
+
+/* An input that only shows its border on hover/focus — the operations table. */
+.borderless {
+  width: 100%;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: var(--text-body);
+  padding: 4px 6px;
+  border-radius: var(--radius-small);
+}
+
+.borderless:hover:not(:disabled),
+.borderless:focus {
+  border-color: var(--line);
+  background: var(--paper);
+}
+
+.borderless:disabled {
+  cursor: not-allowed;
+}

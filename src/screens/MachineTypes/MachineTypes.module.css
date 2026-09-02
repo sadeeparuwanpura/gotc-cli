@@ -1,0 +1,55 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap-6);
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-4);
+  padding: var(--gap-4) var(--cell-x-edge);
+  border-bottom: 1px solid var(--line-2);
+  border-left: 4px solid var(--machine-colour);
+}
+
+.name {
+  font-size: 13.5px;
+  font-weight: var(--weight-semibold);
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--text-meta);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+  padding: 1px 6px;
+  color: var(--ink-soft);
+}
+
+.threads {
+  margin-left: auto;
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+}
+
+.threadCount {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  font-weight: var(--weight-medium);
+}
+
+.ratioInput {
+  max-width: 92px;
+  margin-left: auto;
+}
+
+.ratioCell {
+  display: flex;
+  justify-content: flex-end;
+}
