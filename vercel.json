@@ -7,9 +7,9 @@
 
   "rewrites": [
     {
-      "//": "STEP 1 — replace the host below with your API's public HTTPS origin, keeping the /api suffix. Proxying through this domain is what keeps the session cookie first-party; see DEPLOY.md.",
+      "//": "The API on Render. Proxying it through this domain is what keeps the session cookie first-party — the browser only ever talks to the Vercel origin, so SameSite=Lax is honoured. See DEPLOY.md §1.",
       "source": "/api/:path*",
-      "destination": "https://REPLACE-WITH-YOUR-API-HOST.example.com/api/:path*"
+      "destination": "https://gotc-ser.onrender.com/api/:path*"
     },
     {
       "//": "React Router owns every other path. Vercel checks the filesystem first, so real files under /assets are served directly and only unmatched routes fall through to the app shell.",
