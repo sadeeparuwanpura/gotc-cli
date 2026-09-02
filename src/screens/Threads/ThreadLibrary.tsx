@@ -1,22 +1,32 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 import { fetchThreads } from '../../api/endpoints';
 import { queryKeys } from '../../api/queryKeys';
 import { usePermission } from '../../auth/usePermission';
 import { DataTable, EmptyRow, SkeletonRows, tableStyles } from '../../components/DataTable';
 import { ErrorNotice } from '../../components/Notice';
 import { Num } from '../../components/Num';
+import { DEFAULT_PAGE_SIZE, Pagination } from '../../components/Pagination';
 import { FootNote, Screen, ScreenHeader } from '../../components/Screen';
+import listStyles from '../../components/ListFilter.module.css';
 
 const COLUMNS = 7;
 
 export function ThreadLibrary(): JSX.Element {
   const master = usePermission('master');
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState<number>(DEFAULT_PAGE_SIZE);
+  const [search, setSearch] = useState('');
+
   const threads = useQuery({
-    queryKey: queryKeys.threads(),
-    queryFn: ({ signal }) => fetchThreads(undefined, signal)
+    queryKey: queryKeys.threads(page, search, limit),
+    queryFn: ({ signal }) => fetchThreads({ page, limit, q: search }, signal),
+    placeholderData: keepPreviousData
   });
 
-  const rows = threads.data ?? [];
+  const rows = threads.data?.items ?? [];
+  const total = threads.data?.total ?? 0;
+  const showSkeleton = threads.isLoading && threads.data === undefined;
 
   return (
     <Screen>
@@ -27,7 +37,20 @@ export function ThreadLibrary(): JSX.Element {
 
       <ErrorNotice error={threads.error} />
 
-      <DataTable hoverRows>
+      <div className={listStyles.filterBar}>
+        <input
+          className={listStyles.searchInput}
+          placeholder="Search brand, composition or colour"
+          aria-label="Search brand, composition or colour"
+          value={search}
+          onChange={(event) => {
+            setSearch(event.target.value);
+            setPage(1);
+          }}
+        />
+      </div>
+
+      <DataTable hoverRows attached>
         <thead>
           <tr>
             <th>Brand</th>
@@ -40,10 +63,12 @@ export function ThreadLibrary(): JSX.Element {
           </tr>
         </thead>
         <tbody>
-          {threads.isLoading ? <SkeletonRows rows={3} columns={COLUMNS} /> : null}
+          {showSkeleton ? <SkeletonRows rows={3} columns={COLUMNS} /> : null}
 
-          {!threads.isLoading && rows.length === 0 ? (
-            <EmptyRow columns={COLUMNS}>No threads in the library yet.</EmptyRow>
+          {!showSkeleton && rows.length === 0 ? (
+            <EmptyRow columns={COLUMNS}>
+              {search ? 'No threads match this search.' : 'No threads in the library yet.'}
+            </EmptyRow>
           ) : null}
 
           {rows.map((thread) => (
@@ -73,6 +98,19 @@ export function ThreadLibrary(): JSX.Element {
           ))}
         </tbody>
       </DataTable>
+
+
+      <Pagination
+        page={page}
+        limit={limit}
+        total={total}
+        noun="threads"
+        onPage={setPage}
+        onLimit={(next) => {
+          setLimit(next);
+          setPage(1);
+        }}
+      />
 
       <FootNote>
         {master.can ? '' : `${master.hint}. `}New threads are created inline from any thread position

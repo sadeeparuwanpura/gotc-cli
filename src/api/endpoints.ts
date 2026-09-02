@@ -6,6 +6,7 @@ import type {
   FabricListResponse,
   GarmentDTO,
   GarmentListResponse,
+  MachineTypeDTO,
   MachineTypeListResponse,
   NextStyleNumberResponse,
   OperationDTO,
@@ -17,6 +18,7 @@ import type {
   SessionResponse,
   ThreadDTO,
   ThreadListResponse,
+  UserListItem,
   UserListResponse
 } from './types';
 

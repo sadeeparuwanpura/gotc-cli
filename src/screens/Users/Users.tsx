@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ApiError } from '../../api/client';
 import {
@@ -15,8 +15,10 @@ import { Button } from '../../components/Button';
 import { DataTable, SkeletonRows, tableStyles } from '../../components/DataTable';
 import { Field, FormPanel, fieldStyles } from '../../components/Field';
 import { Notice } from '../../components/Notice';
+import { DEFAULT_PAGE_SIZE, Pagination } from '../../components/Pagination';
 import { FootNote, Screen, ScreenHeader, SectionHead } from '../../components/Screen';
 import { PERMISSIONS, ROLES, type Permission, type Role } from '../../api/types';
+import listStyles from '../../components/ListFilter.module.css';
 import styles from './Users.module.css';
 
 /** Sub-labels under each permission row, from README.md §Roles and permissions. */
@@ -46,8 +48,15 @@ export function Users(): JSX.Element {
   const [draft, setDraft] = useState<NewUserDraft | null>(null);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState<number>(DEFAULT_PAGE_SIZE);
+  const [search, setSearch] = useState('');
 
-  const users = useQuery({ queryKey: queryKeys.users, queryFn: ({ signal }) => fetchUsers(signal) });
+  const users = useQuery({
+    queryKey: queryKeys.users(page, search, limit),
+    queryFn: ({ signal }) => fetchUsers({ page, limit, q: search }, signal),
+    placeholderData: keepPreviousData
+  });
   const matrix = useRolePermissions();
 
   const roleLabel = (role: Role): string =>
@@ -115,7 +124,9 @@ export function Users(): JSX.Element {
     }
   });
 
-  const rows = users.data ?? [];
+  const rows = users.data?.items ?? [];
+  const total = users.data?.total ?? 0;
+  const showSkeleton = users.isLoading && users.data === undefined;
   const adminCount = rows.filter((user) => user.role === 'ADMIN' && user.active).length;
 
   return (
@@ -194,7 +205,20 @@ export function Users(): JSX.Element {
         </FormPanel>
       ) : null}
 
-      <DataTable hoverRows>
+      <div className={listStyles.filterBar}>
+        <input
+          className={listStyles.searchInput}
+          placeholder="Search name or email"
+          aria-label="Search name or email"
+          value={search}
+          onChange={(event) => {
+            setSearch(event.target.value);
+            setPage(1);
+          }}
+        />
+      </div>
+
+      <DataTable hoverRows attached>
         <thead>
           <tr>
             <th>Name</th>
@@ -205,7 +229,7 @@ export function Users(): JSX.Element {
           </tr>
         </thead>
         <tbody>
-          {users.isLoading ? <SkeletonRows rows={4} columns={5} /> : null}
+          {showSkeleton ? <SkeletonRows rows={4} columns={5} /> : null}
 
           {rows.map((user) => {
             const isLastAdmin = user.role === 'ADMIN' && adminCount === 1;
@@ -265,6 +289,19 @@ export function Users(): JSX.Element {
           })}
         </tbody>
       </DataTable>
+
+
+      <Pagination
+        page={page}
+        limit={limit}
+        total={total}
+        noun="users"
+        onPage={setPage}
+        onLimit={(next) => {
+          setLimit(next);
+          setPage(1);
+        }}
+      />
 
       <div className={styles.matrix}>
         <SectionHead title="Role permissions" />

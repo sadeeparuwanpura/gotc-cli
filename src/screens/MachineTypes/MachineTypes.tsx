@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ApiError } from '../../api/client';
 import { fetchMachineTypes, updatePositionRatio } from '../../api/endpoints';
@@ -8,18 +8,26 @@ import { DataTable, tableStyles } from '../../components/DataTable';
 import { CommitNumberInput } from '../../components/Field';
 import { Notice } from '../../components/Notice';
 import { Num } from '../../components/Num';
+import { DEFAULT_PAGE_SIZE, Pagination } from '../../components/Pagination';
 import { FootNote, Screen, ScreenHeader } from '../../components/Screen';
+import listStyles from '../../components/ListFilter.module.css';
 import styles from './MachineTypes.module.css';
 
 export function MachineTypes(): JSX.Element {
   const queryClient = useQueryClient();
   const master = usePermission('master');
   const [error, setError] = useState('');
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState<number>(DEFAULT_PAGE_SIZE);
+  const [search, setSearch] = useState('');
 
   const machineTypes = useQuery({
-    queryKey: queryKeys.machineTypes,
-    queryFn: ({ signal }) => fetchMachineTypes(signal)
+    queryKey: queryKeys.machineTypes(page, search, limit),
+    queryFn: ({ signal }) => fetchMachineTypes({ page, limit, q: search }, signal),
+    placeholderData: keepPreviousData
   });
+
+  const total = machineTypes.data?.total ?? 0;
 
   const saveRatio = useMutation({
     mutationFn: (input: { machineTypeId: string; positionId: string; consumptionRatio: number }) =>
@@ -45,8 +53,21 @@ export function MachineTypes(): JSX.Element {
 
       {error ? <Notice variant="warning">{error}</Notice> : null}
 
+      <div className={`${listStyles.filterBar} ${listStyles.standalone}`}>
+        <input
+          className={listStyles.searchInput}
+          placeholder="Search machine type or code"
+          aria-label="Search machine type or code"
+          value={search}
+          onChange={(event) => {
+            setSearch(event.target.value);
+            setPage(1);
+          }}
+        />
+      </div>
+
       <div className={styles.grid}>
-        {(machineTypes.data ?? []).map((machineType) => (
+        {(machineTypes.data?.items ?? []).map((machineType) => (
           <div key={machineType.id} className={styles.card}>
             <div
               className={styles.head}
@@ -100,6 +121,19 @@ export function MachineTypes(): JSX.Element {
           </div>
         ))}
       </div>
+
+
+      <Pagination
+        page={page}
+        limit={limit}
+        total={total}
+        noun="machine types"
+        onPage={setPage}
+        onLimit={(next) => {
+          setLimit(next);
+          setPage(1);
+        }}
+      />
 
       <FootNote>
         Changing a consumption ratio recalculates every operation on that machine type, on every

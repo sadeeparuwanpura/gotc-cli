@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ApiError } from '../../api/client';
 import {
@@ -15,8 +15,10 @@ import { DataTable, EmptyRow, SkeletonRows, tableStyles } from '../../components
 import { Field, FormPanel, fieldStyles } from '../../components/Field';
 import { ErrorNotice, Notice } from '../../components/Notice';
 import { Num } from '../../components/Num';
+import { DEFAULT_PAGE_SIZE, Pagination } from '../../components/Pagination';
 import { FootNote, Screen, ScreenHeader } from '../../components/Screen';
 import type { FabricDTO } from '../../api/types';
+import listStyles from '../../components/ListFilter.module.css';
 import styles from './FabricLibrary.module.css';
 
 const COLUMNS = 7;
@@ -53,10 +55,14 @@ export function FabricLibrary(): JSX.Element {
   const [draft, setDraft] = useState<Draft | null>(null);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState<number>(DEFAULT_PAGE_SIZE);
+  const [search, setSearch] = useState('');
 
   const fabrics = useQuery({
-    queryKey: queryKeys.fabrics,
-    queryFn: ({ signal }) => fetchFabrics(signal)
+    queryKey: queryKeys.fabrics(page, search, limit),
+    queryFn: ({ signal }) => fetchFabrics({ page, limit, q: search }, signal),
+    placeholderData: keepPreviousData
   });
 
   function refresh(): void {
@@ -122,7 +128,9 @@ export function FabricLibrary(): JSX.Element {
     });
   }
 
-  const rows = fabrics.data ?? [];
+  const rows = fabrics.data?.items ?? [];
+  const total = fabrics.data?.total ?? 0;
+  const showSkeleton = fabrics.isLoading && fabrics.data === undefined;
 
   return (
     <Screen>
@@ -207,7 +215,20 @@ export function FabricLibrary(): JSX.Element {
 
       <ErrorNotice error={fabrics.error} />
 
-      <DataTable hoverRows>
+      <div className={listStyles.filterBar}>
+        <input
+          className={listStyles.searchInput}
+          placeholder="Search fabric, composition or supplier"
+          aria-label="Search fabric, composition or supplier"
+          value={search}
+          onChange={(event) => {
+            setSearch(event.target.value);
+            setPage(1);
+          }}
+        />
+      </div>
+
+      <DataTable hoverRows attached>
         <thead>
           <tr>
             <th>Fabric</th>
@@ -220,10 +241,12 @@ export function FabricLibrary(): JSX.Element {
           </tr>
         </thead>
         <tbody>
-          {fabrics.isLoading ? <SkeletonRows rows={3} columns={COLUMNS} /> : null}
+          {showSkeleton ? <SkeletonRows rows={3} columns={COLUMNS} /> : null}
 
-          {!fabrics.isLoading && rows.length === 0 ? (
-            <EmptyRow columns={COLUMNS}>No fabrics in the library yet.</EmptyRow>
+          {!showSkeleton && rows.length === 0 ? (
+            <EmptyRow columns={COLUMNS}>
+              {search ? 'No fabrics match this search.' : 'No fabrics in the library yet.'}
+            </EmptyRow>
           ) : null}
 
           {rows.map((fabric) => {
@@ -279,6 +302,19 @@ export function FabricLibrary(): JSX.Element {
           })}
         </tbody>
       </DataTable>
+
+
+      <Pagination
+        page={page}
+        limit={limit}
+        total={total}
+        noun="fabrics"
+        onPage={setPage}
+        onLimit={(next) => {
+          setLimit(next);
+          setPage(1);
+        }}
+      />
 
       <FootNote>
         A fabric cannot be deleted while it is assigned to a garment.

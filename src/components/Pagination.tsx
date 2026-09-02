@@ -1,6 +1,6 @@
 import styles from './Pagination.module.css';
 
-export const PAGE_SIZES = [25, 50, 100] as const;
+export const PAGE_SIZES = [5, 10, 25, 50, 100] as const;
 export const DEFAULT_PAGE_SIZE = 25;
 
 interface PaginationProps {
@@ -15,8 +15,8 @@ interface PaginationProps {
 }
 
 /**
- * Page-based paging, server-side. Sits under a table and stays out of the way when the
- * whole set fits on one page — a four-style library should not grow a control bar.
+ * Page-based paging, server-side. The bar always shows: "Showing 1–4 of 4" is worth
+ * reading even on a short list, and the rows-per-page control has to stay reachable.
  */
 export function Pagination({
   page,
@@ -25,11 +25,7 @@ export function Pagination({
   noun,
   onPage,
   onLimit
-}: PaginationProps): JSX.Element | null {
-  if (total <= PAGE_SIZES[0] && total <= limit) {
-    return null;
-  }
-
+}: PaginationProps): JSX.Element {
   const pageCount = Math.max(1, Math.ceil(total / limit));
   const first = total === 0 ? 0 : (page - 1) * limit + 1;
   const last = Math.min(page * limit, total);

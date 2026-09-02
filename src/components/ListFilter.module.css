@@ -1,0 +1,22 @@
+/* The search strip that sits on top of a list table, sharing its border. */
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-5);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  padding: var(--card-pad-tight) var(--cell-x-edge);
+}
+
+/* Where the list below is a card grid rather than a table, it keeps all four sides. */
+.standalone {
+  border-bottom: 1px solid var(--line);
+  margin-bottom: var(--gap-6);
+}
+
+.searchInput {
+  width: 280px;
+  font-size: var(--text-dense);
+  padding: 5px var(--gap-3);
+}
