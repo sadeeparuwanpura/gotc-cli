@@ -6,6 +6,7 @@ import type {
   FabricListResponse,
   GarmentDTO,
   GarmentListResponse,
+  GarmentStatus,
   MachineTypeDTO,
   MachineTypeListResponse,
   NextStyleNumberResponse,
@@ -170,10 +171,17 @@ export interface GarmentInput {
 export const createGarment = (input: GarmentInput): Promise<CreatedGarmentDTO> =>
   api.post<CreatedGarmentDTO>('/garments', input);
 
+/** Status is absent by design — a style moves through the two endpoints below. */
 export const updateGarment = (
   id: string,
-  input: Partial<Omit<GarmentInput, 'copyOperationsFrom'>>
+  input: Partial<Omit<GarmentInput, 'copyOperationsFrom' | 'status'>>
 ): Promise<GarmentDTO> => api.patch<GarmentDTO>(`/garments/${id}`, input);
+
+export const approveGarment = (id: string): Promise<GarmentDTO> =>
+  api.post<GarmentDTO>(`/garments/${id}/approve`);
+
+export const setGarmentStatus = (id: string, status: GarmentStatus): Promise<GarmentDTO> =>
+  api.post<GarmentDTO>(`/garments/${id}/status`, { status });
 
 export const duplicateGarment = (id: string): Promise<CreatedGarmentDTO> =>
   api.post<CreatedGarmentDTO>(`/garments/${id}/duplicate`);

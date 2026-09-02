@@ -85,6 +85,16 @@ later (`lib/useDebouncedCallback.ts`). Reordering persists on drop as one atomic
 Local UI state lives in the component that owns it. The only cross-screen state is a one-shot
 notice, carried in router state by `lib/notice.ts`.
 
+### Pagination
+
+Every list screen pages server-side: garments, cone orders, threads, machine types, fabrics
+and users. One `<Pagination>` control under the table, one search box above it, page size
+5 / 10 / 25 / 50 / 100 (default 25). Changing a filter or the page size returns to page one,
+and `keepPreviousData` keeps the rows on screen instead of flashing skeletons.
+
+Selects that need every row — machine types and threads on an operation, fabrics on the
+new-garment screen — request `WHOLE_SET` (`limit: 200`) rather than a page.
+
 ---
 
 ## Permissions

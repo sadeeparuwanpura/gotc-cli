@@ -145,6 +145,17 @@ a:hover {
   }
 }
 
+/**
+ * A table wider than its column of the screen scrolls inside its own box rather than
+ * pushing the page sideways. The page must never scroll horizontally on its own: the top
+ * bar and sidebar are `position: fixed`, so they would sit on top of the content instead
+ * of travelling with it.
+ */
+.scrollX {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .srOnly {
   position: absolute;
   width: 1px;

@@ -155,7 +155,8 @@ export function OperationsSection({
           />
         </div>
       ) : (
-        <table className={styles.table}>
+        <div className="scrollX">
+          <table className={styles.table}>
           <colgroup>
             <col className={styles.colSeq} />
             <col />
@@ -216,7 +217,8 @@ export function OperationsSection({
               />
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       )}
 
       {operations.length > 0 ? (

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ApiError } from '../../api/client';
 import {
+  approveGarment,
   createOrder,
   duplicateGarment,
   fetchCalculation,
@@ -11,6 +12,7 @@ import {
   fetchOperations,
   fetchOrders,
   fetchThreads,
+  setGarmentStatus,
   WHOLE_SET
 } from '../../api/endpoints';
 import { queryKeys } from '../../api/queryKeys';
@@ -22,6 +24,7 @@ import { BlockedBanner, Notice } from '../../components/Notice';
 import { Num } from '../../components/Num';
 import { Card, CardBody, SectionHead } from '../../components/Screen';
 import { GarmentStatusPill } from '../../components/StatusPill';
+import { formatDate } from '../../lib/format';
 import { noticeState, useRouteNotice } from '../../lib/notice';
 import type { IncompleteOperationRef } from '../../api/types';
 import { OperationsSection } from './OperationsSection';
@@ -42,6 +45,7 @@ export function GarmentDetail(): JSX.Element {
   const infoGate = usePermission('info');
   const operationsGate = usePermission('operations');
   const ordersGate = usePermission('orders');
+  const approveGate = usePermission('approve');
 
   const garment = useQuery({
     queryKey: queryKeys.garment(id),
@@ -72,6 +76,25 @@ export function GarmentDetail(): JSX.Element {
     queryKey: queryKeys.orders('All', garment.data?.styleNumber ?? ''),
     queryFn: ({ signal }) => fetchOrders({ q: garment.data?.styleNumber }, signal),
     enabled: Boolean(garment.data?.styleNumber)
+  });
+
+  function afterTransition(): void {
+    void queryClient.invalidateQueries({ queryKey: queryKeys.garment(id) });
+    void queryClient.invalidateQueries({ queryKey: queryKeys.allGarments });
+  }
+
+  const approve = useMutation({
+    mutationFn: () => approveGarment(id),
+    onSuccess: afterTransition,
+    onError: (caught: unknown) =>
+      setError(caught instanceof ApiError ? caught.message : 'The style could not be approved.')
+  });
+
+  const reopen = useMutation({
+    mutationFn: () => setGarmentStatus(id, 'In development'),
+    onSuccess: afterTransition,
+    onError: (caught: unknown) =>
+      setError(caught instanceof ApiError ? caught.message : 'The style could not be reopened.')
   });
 
   const duplicate = useMutation({
@@ -171,10 +194,34 @@ export function GarmentDetail(): JSX.Element {
               <span className={styles.metaItem}>
                 Wastage <span className={styles.metaFigure}>{record.wastagePercent}%</span>
               </span>
+              {record.status === 'Approved' ? (
+                <span className={styles.metaItem}>
+                  Approved by {record.approvedByName ?? '—'} · {formatDate(record.approvedAt)}
+                </span>
+              ) : null}
             </div>
           </div>
 
           <div className={styles.headerActions}>
+            {record.status === 'Approved' ? (
+              <Button
+                variant="quiet"
+                onClick={() => reopen.mutate()}
+                disabled={!approveGate.can || reopen.isPending}
+                {...(approveGate.can ? {} : { title: approveGate.hint })}
+              >
+                Reopen
+              </Button>
+            ) : (
+              <Button
+                variant="ok"
+                onClick={() => approve.mutate()}
+                disabled={!approveGate.can || approve.isPending}
+                {...(approveGate.can ? {} : { title: approveGate.hint })}
+              >
+                Approve style
+              </Button>
+            )}
             <Button
               onClick={() => duplicate.mutate()}
               disabled={!infoGate.can || duplicate.isPending}

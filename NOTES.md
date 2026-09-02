@@ -86,13 +86,62 @@ alone is not operable without a mouse.
 
 ---
 
+### The page must never scroll sideways
+
+Three things had to be true together, and one of them was wrong:
+
+1. **The 1180px minimum is the whole app, sidebar included.** `.content` was offset by the
+   212px sidebar *and* given `min-width: 1180px`, so the real minimum was 1392px — a 1200px
+   window was forced to scroll sideways by exactly the width of the sidebar. Because the
+   sidebar and top bar are `position: fixed`, they then sat on top of the content instead of
+   travelling with it, which is what made it look broken rather than merely tight. It is now
+   `min-width: calc(var(--min-app-w) - var(--sidebar-w))`.
+2. **A wide table scrolls inside its own box**, never by widening the page — every
+   `DataTable`, the operations table and the thread-requirement table sit in a `.scrollX`
+   wrapper (a global utility in `global.css`, alongside `.mono`). The table stays a real
+   table; nothing is card-ified.
+3. **The A4 sheet fills the desk rather than overflowing it.** A4 landscape at 96dpi is
+   1123px and the desk is ~940px on a 1200px window, so the printed documents were clipped
+   on the right. The sheet is now `width: min(var(--sheet-w), 100%)`. Printing is unaffected
+   — the print rules drop the width entirely and `@page` supplies the real geometry.
+
+Verified at a 1200px viewport: `document.documentElement.scrollWidth === clientWidth` on the
+register, the order detail, the garment library and the master-data screens, with every action
+button inside the viewport.
+
+### Pagination
+
+Every list screen — garments, cone orders, threads, machine types, fabrics, users — pages
+server-side through one `<Pagination>` control and one `{ items, total, page, limit }`
+envelope, with a server-side search box above the table. Page size defaults to 25 and the
+control offers 5 / 10 / 25 / 50 / 100; changing the filter or the page size returns to page one.
+
+The bar always renders, even when everything fits: "Showing 1–4 of 4 styles" is worth reading
+on a short list, and the rows-per-page control has to stay reachable.
+
+Screens that need a **whole** set rather than a page ask for it explicitly with
+`WHOLE_SET` (`limit: 200`): the machine and thread selects on an operation, the machine
+legend, the fabric picker and the copy-operations-from select on the new-garment screen. The
+sidebar counts ask for `limit: 1` and read `total`, so they cost one row each.
+
+### Approving a style
+
+The garment sub-header carries one transition button: **Approve style** while the style is a
+draft or in development, **Reopen** once it is approved. Both are gated on `approve` — the
+same key the cone order uses — and both are disabled rather than hidden, with the hint from
+`usePermission`. When the style is approved the meta row gains "Approved by &lt;name&gt; ·
+&lt;date&gt;" after Wastage, so the record is readable without opening the information card.
+
+The screen offers only the moves an operator actually makes. `Draft → Approved` and
+`In development → Draft` are legal on the server and reachable through
+`POST /garments/:id/status`, but no button asks for them; Reopen sends `In development`.
+Neither mutation can change a metre or a cone, so they invalidate the garment and the library
+but deliberately not `garmentCalculation`.
+
 ## Known gaps
 
 - **A failed read leaves the previous rows on screen.** `ErrorNotice` now says so above the
   table, but there is no retry button — reloading the screen is the recovery.
-- **No pagination in the UI.** `GET /orders` paginates server-side (default 50) and the client
-  requests the first page only. Past a few hundred orders the register needs a control.
-- **`GET /garments` is unpaginated** on the server, so the library loads every style.
 - **The operations table's Thread column** is the spec's 314px and ellipsises a long summary
   such as `LOOPER 2 × 120 Surfilor · NEEDLE 2 × 160 Gramax`. The full string is on the
   expanded panel and the printed sheet.

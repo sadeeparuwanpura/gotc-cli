@@ -226,10 +226,16 @@
 
 /* --- content ---------------------------------------------------------- */
 
+/**
+ * The 1180px minimum is the **whole app**, sidebar included. Setting `min-width` to the
+ * full figure here as well as offsetting by the sidebar made the real minimum 1392px, so a
+ * 1200px window was forced to scroll sideways by exactly the width of the sidebar — and
+ * because the sidebar is `position: fixed`, it then sat on top of the content.
+ */
 .content {
   margin-left: var(--sidebar-w);
   padding-top: var(--top-bar-h);
-  min-width: var(--min-app-w);
+  min-width: calc(var(--min-app-w) - var(--sidebar-w));
 }
 
 @media print {

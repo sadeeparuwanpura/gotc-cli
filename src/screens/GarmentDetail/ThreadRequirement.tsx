@@ -124,7 +124,8 @@ export function ThreadRequirement({
         <span className={styles.assumptionNote}>Cone yield is per thread, in the table below.</span>
       </div>
 
-      <table className={styles.table}>
+      <div className="scrollX">
+        <table className={styles.table}>
         <thead>
           <tr>
             <th>Thread</th>
@@ -244,7 +245,8 @@ export function ThreadRequirement({
             </td>
           </tr>
         </tbody>
-      </table>
+        </table>
+      </div>
     </section>
   );
 }

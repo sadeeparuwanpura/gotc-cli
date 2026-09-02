@@ -33,7 +33,12 @@ export function DataTable({
     .filter(Boolean)
     .join(' ');
 
-  return <table className={classes}>{children}</table>;
+  // Every table gets its own horizontal scroller: a wide one must never widen the page.
+  return (
+    <div className="scrollX">
+      <table className={classes}>{children}</table>
+    </div>
+  );
 }
 
 /** A name over a mono date — "Created by" and "Approved by". */

@@ -25,11 +25,22 @@
  * A4 landscape at 96dpi. On paper the page drops its border, fixed width and padding so
  * it flows onto the sheet.
  */
+.sheetScroller {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .sheet {
   background: #ffffff;
   color: #000000;
   border: 1px solid var(--line);
-  width: var(--sheet-w);
+  /**
+   * A4 landscape at 96dpi is 1123px, but the desk is narrower than that on a 1200px
+   * window. Filling the available width up to A4 keeps the whole document readable
+   * without a sideways scroll; the fixed geometry is what `@page` gives it on paper,
+   * and the print rules below drop this width entirely.
+   */
+  width: min(var(--sheet-w), 100%);
   min-height: var(--sheet-h);
   padding: var(--sheet-pad-y) var(--sheet-pad-x);
   margin: 0 auto;
@@ -150,6 +161,11 @@
 @media print {
   .desk {
     padding: 0;
+  }
+
+  .sheetScroller {
+    max-width: none;
+    overflow: visible;
   }
 
   .sheet {

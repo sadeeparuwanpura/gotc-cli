@@ -30,7 +30,13 @@ export function SheetDesk({ label, onBack, backLabel, children }: SheetDeskProps
 }
 
 export function Sheet({ children }: { children: ReactNode }): JSX.Element {
-  return <div className={styles.sheet}>{children}</div>;
+  // A4 landscape at 96dpi is a fixed 1123px. On a narrower desk it scrolls in its own
+  // box; on paper the wrapper and the fixed width both fall away.
+  return (
+    <div className={styles.sheetScroller}>
+      <div className={styles.sheet}>{children}</div>
+    </div>
+  );
 }
 
 export function SheetFooter({ parts }: { parts: string[] }): JSX.Element {
