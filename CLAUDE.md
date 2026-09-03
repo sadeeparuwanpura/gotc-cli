@@ -23,8 +23,11 @@ order snapshot return — including the `→ 145 cones` working under each threa
   form drafts, notices. No global store in phase 1. A notice that must survive one navigation
   travels in router state via `lib/notice.ts`.
 - Tables are real `<table>` elements with `<thead>`/`<tbody>`; keep the column order and
-  density from the spec. Never card-ify a table — this is a desktop tool with a 1180px minimum
-  width.
+  density from the spec. **Above 700px a table is never card-ified** — that remains the rule
+  for every width the tool is designed for. Below 700px each row stacks into a labelled card,
+  because a ten-column row cannot be read on a phone at any width. The element stays a real
+  `<table>`; only its `display` changes, and `DataTable` copies each `<th>` onto the cells
+  below it as `data-label` so a renamed column cannot drift from its stacked label.
 - Group siblings with flex/grid and `gap`, never with margins on each child.
 - Permission-locked controls are **disabled, not hidden**, and carry the explanatory `title`
   from the permission matrix plus `aria-disabled`. Use `usePermission(key)`, which computes the
@@ -61,5 +64,13 @@ src/
 ## What not to build in phase 1
 
 No PDF service (the browser prints), no file uploads, no notifications, no audit log, no
-soft-delete UI, no i18n, no mobile layout, no CI, no Docker, no deployment configuration.
+soft-delete UI, no i18n, no CI, no Docker.
 Note anything that feels missing in `NOTES.md` rather than building it unasked.
+
+**The "no mobile layout" rule was lifted.** The handoff spec called for a desktop-only tool at
+a 1180px minimum; the app is now responsive down to 320px. Breakpoints are documented in
+`styles/tokens.css` — 1024 laptop, 900 tablet (the sidebar becomes a drawer), 700 mobile
+(tables become cards), 480 small phone. Custom properties cannot be used inside `@media`, so
+the numbers are written literally in the modules and the tokens are documentation.
+
+Deployment configuration now exists too: `vercel.json` here, `render.yaml` in the server.

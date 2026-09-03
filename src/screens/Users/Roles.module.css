@@ -1,0 +1,69 @@
+.permissionLabel {
+  font-weight: var(--weight-medium);
+  color: var(--ink);
+}
+
+.permissionSub {
+  font-size: var(--text-meta);
+  color: var(--ink-faint);
+  margin-top: 1px;
+}
+
+.roleHead {
+  text-align: center;
+}
+
+.roleHeadCount {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-weight: var(--weight-regular);
+  margin-top: 1px;
+}
+
+.cell {
+  text-align: center;
+}
+
+/* The signed-in user's own column is tinted. */
+.ownColumn {
+  background: var(--paper-alt);
+}
+
+.checkbox {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+
+.checkbox:disabled {
+  cursor: not-allowed;
+}
+
+/* --- responsive -------------------------------------------------------- */
+
+@media (max-width: 700px) {
+  /*
+   * Stacked as a card, each permission becomes a heading with one labelled row per role
+   * group. The checkbox sits at the end of its row rather than centred in a column.
+   */
+  .cell {
+    text-align: right;
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* The tint marked a column; in a card it would just look like a selected row. */
+  .ownColumn {
+    background: transparent;
+  }
+
+  .permissionSub {
+    max-width: 22ch;
+  }
+}

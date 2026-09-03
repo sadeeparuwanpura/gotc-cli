@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useSession } from '../../auth/SessionProvider';
 import {
@@ -10,6 +11,7 @@ import {
   fetchUsers
 } from '../../api/endpoints';
 import { queryKeys } from '../../api/queryKeys';
+import { ROLES } from '../../api/types';
 import { initials } from '../../lib/format';
 import styles from './Shell.module.css';
 
@@ -30,6 +32,26 @@ export function Shell(): JSX.Element {
   const { user, signOut } = useSession();
   const navigate = useNavigate();
   const location = useLocation();
+
+  /**
+   * Below the tablet breakpoint the sidebar leaves the flow and becomes a drawer. Above it
+   * the CSS ignores this flag entirely, so the desktop shell is unchanged.
+   */
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Arriving somewhere new closes the drawer — otherwise it covers the screen you asked for.
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKeyDown = (event: KeyboardEvent): void => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [menuOpen]);
 
   // The sidebar wants totals, not rows: ask for the smallest possible page.
   const garments = useQuery({
@@ -91,7 +113,14 @@ export function Shell(): JSX.Element {
     {
       label: 'ADMINISTRATION',
       items: [
-        { label: 'Users & roles', path: '/users', count: users.data?.total ?? null, matches: ['/users'] }
+        { label: 'Users', path: '/users', count: users.data?.total ?? null, matches: ['/users'] },
+        {
+          label: 'Roles & permissions',
+          path: '/roles',
+          // The four role groups are fixed by the domain, so this count is a constant.
+          count: ROLES.length,
+          matches: ['/roles']
+        }
       ]
     }
   ];
@@ -102,6 +131,17 @@ export function Shell(): JSX.Element {
   return (
     <>
       <header className={styles.topBar}>
+        <button
+          type="button"
+          className={styles.menuButton}
+          aria-label={menuOpen ? 'Close the section menu' : 'Open the section menu'}
+          aria-expanded={menuOpen}
+          aria-controls="gotc-sidebar"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span className={styles.menuBars} />
+        </button>
+
         <div className={styles.brand}>
           <span className={styles.mark}>G</span>
           <div>
@@ -117,7 +157,19 @@ export function Shell(): JSX.Element {
         ) : null}
       </header>
 
-      <nav className={styles.sidebar} aria-label="Sections">
+      <button
+        type="button"
+        aria-hidden="true"
+        tabIndex={-1}
+        className={`${styles.scrim} ${menuOpen ? styles.scrimVisible : ''}`}
+        onClick={() => setMenuOpen(false)}
+      />
+
+      <nav
+        id="gotc-sidebar"
+        className={`${styles.sidebar} ${menuOpen ? styles.sidebarOpen : ''}`}
+        aria-label="Sections"
+      >
         {groups.map((group) => (
           <div key={group.label} className={styles.group}>
             <div className={styles.groupLabel}>{group.label}</div>

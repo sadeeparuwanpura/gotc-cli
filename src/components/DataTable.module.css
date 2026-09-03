@@ -127,3 +127,108 @@
   text-align: center;
   color: var(--ink-soft);
 }
+
+/* ======================================================================
+   Mobile — a row becomes a card.
+
+   The desktop rule is "never card-ify a table", and above 700px nothing here
+   applies. Below it a ten-column row cannot be read at any width, so each row
+   stacks into labelled lines. The element stays a real <table>; only its
+   display changes, so semantics and screen-reader output are unaffected.
+
+   Each cell prints its column name from `data-label`. A cell without one
+   (an actions cell) simply spans the full width.
+   ====================================================================== */
+
+@media (max-width: 700px) {
+  .table {
+    border: 0;
+    background: transparent;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  /* Headers move into each cell, so the row of them is redundant. */
+  .table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .table tbody tr {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    margin-bottom: var(--gap-4);
+    padding: var(--gap-2) 0;
+  }
+
+  .table tbody td {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gap-5);
+    height: auto;
+    min-height: 0;
+    padding: var(--gap-2) var(--cell-x-edge);
+    border-bottom: 0;
+    text-align: left;
+  }
+
+  .table tbody td::before {
+    content: attr(data-label);
+    flex: none;
+    font-size: var(--text-meta-lg);
+    font-weight: var(--weight-medium);
+    color: var(--ink-soft);
+  }
+
+  /* An actions cell has no label; let it use the whole width. */
+  .table tbody td:not([data-label]) {
+    justify-content: flex-start;
+  }
+
+  /* Right-alignment is a column concept; in a card the value sits at the end. */
+  .right {
+    text-align: right;
+  }
+
+  .hoverRows tbody tr:hover td {
+    background: transparent;
+  }
+
+  .clickRows tbody tr:active {
+    background: var(--paper-alt);
+  }
+
+  /* Fixed row heights are a table-layout concern and fight the stacked card. */
+  .rowsLibrary tbody td,
+  .rowsOrders tbody td {
+    height: auto;
+  }
+
+  .emptyRow td,
+  .emptyRow td:not([data-label]) {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .emptyRow td::before {
+    content: none;
+  }
+
+  .skeleton {
+    width: 100%;
+  }
+}

@@ -238,9 +238,150 @@
   min-width: calc(var(--min-app-w) - var(--sidebar-w));
 }
 
+/* --- the drawer trigger, hidden until the sidebar leaves the flow ------ */
+
+.menuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--top-bar-line-2);
+  border-radius: var(--radius-small);
+  background: transparent;
+  color: var(--on-ink);
+  flex: none;
+}
+
+.menuButton:hover {
+  background: var(--top-bar-line);
+}
+
+.menuBars {
+  display: block;
+  width: 14px;
+  height: 1.5px;
+  background: currentColor;
+  position: relative;
+}
+
+.menuBars::before,
+.menuBars::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 14px;
+  height: 1.5px;
+  background: currentColor;
+}
+
+.menuBars::before {
+  top: -4.5px;
+}
+
+.menuBars::after {
+  top: 4.5px;
+}
+
+/* Covers the content while the drawer is open; tapping it closes the drawer. */
+.scrim {
+  display: none;
+  position: fixed;
+  inset: var(--top-bar-h) 0 0 0;
+  background: rgb(22 25 28 / 45%);
+  z-index: 39;
+  border: 0;
+  width: 100%;
+}
+
+/* ======================================================================
+   Tablet and below — the sidebar leaves the flow and becomes a drawer.
+   ====================================================================== */
+
+@media (max-width: 900px) {
+  .topBar {
+    min-width: 0;
+    padding-right: 12px;
+  }
+
+  /*
+   * The brand block no longer has to match a sidebar that is not there. `margin-right: auto`
+   * keeps the trigger and the brand together on the left, with the identity pushed right —
+   * `space-between` alone would strand the brand in the middle.
+   */
+  .brand {
+    width: auto;
+    border-right: 0;
+    padding-right: 12px;
+    margin-right: auto;
+  }
+
+  .menuButton {
+    display: flex;
+    order: -1;
+    margin-left: 12px;
+    margin-right: -4px;
+  }
+
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.18s ease-out;
+    width: min(var(--sidebar-w), 82vw);
+  }
+
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+
+  .scrimVisible {
+    display: block;
+  }
+
+  .content {
+    margin-left: 0;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  /* The role label is the first thing to go when the bar runs out of room. */
+  .identityRole {
+    display: none;
+  }
+
+  .identity {
+    gap: var(--gap-3);
+    padding-left: var(--gap-3);
+    min-width: 0;
+  }
+
+  .identityName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tagline {
+    display: none;
+  }
+
+  /* Nav rows become tap targets rather than dense desktop rows. */
+  .item {
+    min-height: var(--tap-target);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar {
+    transition: none;
+  }
+}
+
 @media print {
   .topBar,
-  .sidebar {
+  .sidebar,
+  .scrim,
+  .menuButton {
     display: none;
   }
 

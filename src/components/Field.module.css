@@ -108,3 +108,25 @@
 .borderless:disabled {
   cursor: not-allowed;
 }
+
+/* --- responsive -------------------------------------------------------- */
+
+@media (max-width: 700px) {
+  /* A form's buttons go full width and become tap targets. */
+  .panelActions {
+    flex-wrap: wrap;
+  }
+
+  .panelActions > * {
+    flex: 1 1 auto;
+    min-height: var(--tap-target);
+  }
+
+  .input,
+  .select,
+  .textarea {
+    min-height: var(--tap-target);
+    /* iOS zooms the page when a focused input is under 16px. */
+    font-size: 16px;
+  }
+}

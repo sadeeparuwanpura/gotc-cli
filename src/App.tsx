@@ -13,6 +13,7 @@ import { ThreadLibrary } from './screens/Threads/ThreadLibrary';
 import { MachineTypes } from './screens/MachineTypes/MachineTypes';
 import { FabricLibrary } from './screens/Fabrics/FabricLibrary';
 import { Users } from './screens/Users/Users';
+import { Roles } from './screens/Users/Roles';
 
 /** Every screen has a real URL — the prototype's single-state switch was a limitation. */
 export function App(): JSX.Element {
@@ -35,6 +36,7 @@ export function App(): JSX.Element {
           <Route path="/machine-types" element={<MachineTypes />} />
           <Route path="/fabrics" element={<FabricLibrary />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/roles" element={<Roles />} />
 
           <Route path="/" element={<Navigate to="/garments" replace />} />
         </Route>

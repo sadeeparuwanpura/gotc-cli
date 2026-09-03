@@ -1,6 +1,7 @@
+/* Brand · Ticket · Composition · Colour · Cone yield · Unit price */
 .formGrid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: var(--gap-5);
 }
 
@@ -24,9 +25,6 @@
 .actionLocked {
   color: var(--ink-faint);
 }
-
-
-/* --- responsive -------------------------------------------------------- */
 
 @media (max-width: 1100px) {
   .formGrid {

@@ -22,50 +22,17 @@
   color: var(--ink-faint);
 }
 
-.matrix {
-  margin-top: var(--gap-7);
+
+/* --- responsive -------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .formGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-.permissionLabel {
-  font-weight: var(--weight-medium);
-  color: var(--ink);
-}
-
-.permissionSub {
-  font-size: var(--text-meta);
-  color: var(--ink-faint);
-  margin-top: 1px;
-}
-
-.roleHead {
-  text-align: center;
-}
-
-.roleHeadCount {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--ink-faint);
-  font-weight: var(--weight-regular);
-  margin-top: 1px;
-}
-
-.cell {
-  text-align: center;
-}
-
-/* The signed-in user's own column is tinted. */
-.ownColumn {
-  background: var(--paper-alt);
-}
-
-.checkbox {
-  width: 15px;
-  height: 15px;
-  accent-color: var(--ink);
-  cursor: pointer;
-}
-
-.checkbox:disabled {
-  cursor: not-allowed;
+@media (max-width: 600px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
 }

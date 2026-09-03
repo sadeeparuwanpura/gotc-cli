@@ -104,6 +104,28 @@
   --gap-6: 18px;
   --gap-7: 22px;
 
+  /**
+   * --- breakpoints ----------------------------------------------------
+   *
+   * Custom properties cannot be used inside a `@media` query, so these are
+   * documentation: the same numbers are written literally in the media queries.
+   * Change them here and in the modules together.
+   *
+   *   1180  the original desktop design width — the app is laid out for this
+   *   1024  laptop: side-by-side panels become stacked
+   *    900  tablet: the sidebar leaves the flow and becomes a drawer
+   *    700  mobile: tables become cards, headers stack
+   *    480  small phone: multi-column forms become single column
+   */
+  --bp-wide: 1180px;
+  --bp-laptop: 1024px;
+  --bp-tablet: 900px;
+  --bp-mobile: 700px;
+  --bp-small: 480px;
+
+  /* Touch targets need a floor the dense desktop rows do not. */
+  --tap-target: 40px;
+
   /* --- shell ---------------------------------------------------------- */
   --top-bar-h: 48px;
   --sidebar-w: 212px;

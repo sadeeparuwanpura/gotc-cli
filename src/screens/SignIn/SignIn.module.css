@@ -158,3 +158,59 @@
 .submit:disabled {
   opacity: 0.55;
 }
+
+
+/* --- responsive -------------------------------------------------------- */
+
+/* The ink panel is scene-setting; on a phone the form is the whole job. */
+@media (max-width: 900px) {
+  .page {
+    grid-template-columns: 1fr;
+    min-height: 100vh;
+  }
+
+  .panel {
+    padding: 32px 28px;
+    gap: var(--gap-6);
+  }
+
+  .headline {
+    font-size: 28px;
+    max-width: none;
+  }
+
+  .lede {
+    margin-top: var(--gap-5);
+  }
+
+  .counts {
+    margin-top: var(--gap-6);
+    padding-top: var(--gap-5);
+    gap: var(--gap-7);
+  }
+
+  .formSide {
+    padding: 32px 28px 48px;
+  }
+}
+
+@media (max-width: 700px) {
+  /* Everything but the mark and the form is decoration at this width. */
+  .lede,
+  .counts,
+  .footnote {
+    display: none;
+  }
+
+  .panel {
+    padding: 24px 20px;
+  }
+
+  .headline {
+    font-size: 23px;
+  }
+
+  .form {
+    max-width: none;
+  }
+}

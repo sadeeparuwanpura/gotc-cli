@@ -13,6 +13,7 @@ import type {
   OperationDTO,
   OrderDTO,
   OrderListResponse,
+  PositionName,
   Role,
   RolePermissionRow,
   RoundingMode,
@@ -114,6 +115,34 @@ export const updatePositionRatio = (
   api.patch<MachineTypeDTO>(`/machine-types/${machineTypeId}/positions/${positionId}`, {
     consumptionRatio
   });
+
+export interface MachinePositionInput {
+  position: PositionName;
+  count: number;
+  consumptionRatio: number;
+}
+
+export interface MachineTypeInput {
+  name: string;
+  code: string;
+  colour: string;
+  positions: MachinePositionInput[];
+}
+
+export const createMachineType = (input: MachineTypeInput): Promise<MachineTypeDTO> =>
+  api.post<MachineTypeDTO>('/machine-types', input);
+
+/**
+ * Sending `positions` mints new position ids server-side, which clears the thread map of
+ * every operation on this machine, on every garment. Omit the key to edit only the
+ * identity fields.
+ */
+export const updateMachineType = (
+  id: string,
+  input: Partial<MachineTypeInput>
+): Promise<MachineTypeDTO> => api.patch<MachineTypeDTO>(`/machine-types/${id}`, input);
+
+export const deleteMachineType = (id: string): Promise<void> => api.delete(`/machine-types/${id}`);
 
 // --- fabrics ----------------------------------------------------------------
 

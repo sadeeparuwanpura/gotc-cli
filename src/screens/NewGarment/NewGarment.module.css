@@ -203,3 +203,39 @@
   line-height: 1.5;
   margin: var(--gap-4) 0;
 }
+
+
+/* --- responsive -------------------------------------------------------- */
+
+/* The sticky "Will be created" rail drops below the form rather than beside it. */
+@media (max-width: 1024px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  /* The rail stops being a rail once it is under the form. */
+  .right {
+    position: static;
+  }
+}
+
+@media (max-width: 700px) {
+  .identityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Fabric row: select, parts, remove — stacked, with the remove button last. */
+  .fabricRow {
+    grid-template-columns: 1fr;
+    gap: var(--gap-4);
+    padding-bottom: var(--gap-5);
+    border-bottom: 1px solid var(--line-3);
+  }
+
+  .removeRow {
+    justify-self: start;
+    width: auto;
+    min-height: var(--tap-target);
+    padding-inline: var(--gap-5);
+  }
+}

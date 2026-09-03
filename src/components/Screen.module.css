@@ -101,3 +101,37 @@
   max-width: 52ch;
   line-height: 1.6;
 }
+
+/* --- responsive -------------------------------------------------------- */
+
+@media (max-width: 700px) {
+  .screen {
+    padding: var(--gap-6) var(--gap-5) 48px;
+  }
+
+  /* Title and actions stack rather than fighting for one line. */
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-4);
+    margin-bottom: var(--gap-5);
+  }
+
+  .actions {
+    flex-wrap: wrap;
+  }
+
+  .actions > * {
+    min-height: var(--tap-target);
+  }
+
+  .sectionHead {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-2);
+  }
+
+  .empty {
+    padding: 32px var(--gap-5) 36px;
+  }
+}

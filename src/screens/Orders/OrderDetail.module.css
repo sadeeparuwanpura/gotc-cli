@@ -72,3 +72,39 @@
   font-size: var(--text-dense);
   color: var(--ink-2);
 }
+
+/* --- responsive -------------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  /*
+   * Up to five actions live here — All orders, Open garment, Reject, Approve, Print —
+   * and `flex: none` kept them on one line until they ran off the page.
+   */
+  .chromeTop {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--gap-4);
+  }
+
+  .actions {
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 700px) {
+  .identity {
+    flex-wrap: wrap;
+    row-gap: var(--gap-2);
+    min-width: 0;
+  }
+
+  .meta {
+    flex-wrap: wrap;
+    row-gap: var(--gap-2);
+  }
+
+  .actions > * {
+    min-height: var(--tap-target);
+  }
+}

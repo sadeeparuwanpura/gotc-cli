@@ -75,3 +75,45 @@
   font-family: var(--font-mono);
   color: var(--ink);
 }
+
+/* --- responsive -------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .filterBar {
+    flex-wrap: wrap;
+    row-gap: var(--gap-4);
+  }
+
+  /*
+   * The 232px input plus a nowrap result count pushed the bar past the viewport.
+   * Dropping the auto margin lets the search sit on its own line and stretch.
+   */
+  .search {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .searchInput {
+    width: auto;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  /* Six status chips do not fit on one phone line — let them wrap. */
+  .chips {
+    flex-wrap: wrap;
+    row-gap: var(--gap-2);
+  }
+
+  .searchInput {
+    min-height: var(--tap-target);
+    /* iOS zooms the page when a focused input is under 16px. */
+    font-size: 16px;
+  }
+
+  .resultCount {
+    white-space: normal;
+  }
+}

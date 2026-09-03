@@ -18,6 +18,11 @@ export const queryKeys = {
   allGarments: ['garments'] as const,
   garment: (id: string) => ['garment', id] as const,
   garmentCalculation: (id: string) => ['garmentCalculation', id] as const,
+  /**
+   * Prefix for every garment's calculation. Master data is shared, so changing a cone yield
+   * or a consumption ratio can move a number on any garment, not just the one on screen.
+   */
+  allCalculations: ['garmentCalculation'] as const,
   nextStyleNumber: ['nextStyleNumber'] as const,
   operations: (garmentId: string) => ['operations', garmentId] as const,
   orders: (status: string, search: string, page = 1) => ['orders', status, search, page] as const,

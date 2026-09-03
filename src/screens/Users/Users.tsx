@@ -1,36 +1,18 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { ApiError } from '../../api/client';
-import {
-  createUser,
-  deleteUser,
-  fetchUsers,
-  updateRolePermissions,
-  updateUser
-} from '../../api/endpoints';
+import { createUser, deleteUser, fetchUsers, updateUser } from '../../api/endpoints';
 import { queryKeys } from '../../api/queryKeys';
-import { useSession } from '../../auth/SessionProvider';
 import { usePermission, useRolePermissions } from '../../auth/usePermission';
 import { Button } from '../../components/Button';
 import { DataTable, SkeletonRows, tableStyles } from '../../components/DataTable';
 import { Field, FormPanel, fieldStyles } from '../../components/Field';
-import { Notice } from '../../components/Notice';
+import { ErrorNotice, Notice } from '../../components/Notice';
 import { DEFAULT_PAGE_SIZE, Pagination } from '../../components/Pagination';
-import { FootNote, Screen, ScreenHeader, SectionHead } from '../../components/Screen';
-import { PERMISSIONS, ROLES, type Permission, type Role } from '../../api/types';
+import { FootNote, Screen, ScreenHeader } from '../../components/Screen';
+import { ROLES, type Role } from '../../api/types';
 import listStyles from '../../components/ListFilter.module.css';
 import styles from './Users.module.css';
-
-/** Sub-labels under each permission row, from README.md §Roles and permissions. */
-const PERMISSION_LABELS: Record<Permission, { label: string; sub: string }> = {
-  info: { label: 'Garment information', sub: 'Style, buyer, quantity, wastage' },
-  fabrics: { label: 'Fabrics', sub: 'Library CRUD and part assignment' },
-  operations: { label: 'Operations and threads', sub: 'Sequence, machine, seam, thread positions' },
-  master: { label: 'Master data', sub: 'Thread library and machine types' },
-  orders: { label: 'Create cone orders', sub: 'Generate an order from a garment' },
-  approve: { label: 'Approve cone orders', sub: 'Approve, reject, mark as ordered' },
-  users: { label: 'Users and permissions', sub: 'Accounts, role groups, this table' }
-};
 
 interface NewUserDraft {
   name: string;
@@ -43,7 +25,6 @@ const BLANK: NewUserDraft = { name: '', email: '', role: 'GARMENT_TECH' };
 export function Users(): JSX.Element {
   const queryClient = useQueryClient();
   const gate = usePermission('users');
-  const { user: me } = useSession();
 
   const [draft, setDraft] = useState<NewUserDraft | null>(null);
   const [error, setError] = useState('');
@@ -103,27 +84,6 @@ export function Users(): JSX.Element {
     }
   });
 
-  const togglePermission = useMutation({
-    mutationFn: (input: { role: Role; permission: Permission; next: boolean }) =>
-      updateRolePermissions(input.role, { [input.permission]: input.next }),
-    onSuccess: (row, input) => {
-      const label = PERMISSION_LABELS[input.permission].label.toLowerCase();
-      setNotice(
-        input.next
-          ? `Granted ${label} for ${row.roleLabel}.`
-          : `Removed ${label} for ${row.roleLabel}.`
-      );
-      // A permission change alters what this very session may edit elsewhere.
-      void queryClient.invalidateQueries({ queryKey: queryKeys.permissions });
-      void queryClient.invalidateQueries({ queryKey: queryKeys.session });
-    },
-    onError: (caught: unknown) => {
-      setNotice(
-        caught instanceof ApiError ? caught.message : 'The permission could not be changed.'
-      );
-    }
-  });
-
   const rows = users.data?.items ?? [];
   const total = users.data?.total ?? 0;
   const showSkeleton = users.isLoading && users.data === undefined;
@@ -132,7 +92,7 @@ export function Users(): JSX.Element {
   return (
     <Screen>
       <ScreenHeader
-        title="Users & permissions"
+        title="Users"
         subline={gate.can ? undefined : gate.hint}
         actions={
           <Button
@@ -149,6 +109,7 @@ export function Users(): JSX.Element {
       />
 
       {notice ? <Notice variant="success">{notice}</Notice> : null}
+      <ErrorNotice error={users.error} />
 
       {draft ? (
         <FormPanel
@@ -303,71 +264,9 @@ export function Users(): JSX.Element {
         }}
       />
 
-      <div className={styles.matrix}>
-        <SectionHead title="Role permissions" />
-        <DataTable>
-          <thead>
-            <tr>
-              <th>Permission</th>
-              {(matrix.data ?? []).map((row) => (
-                <th key={row.role} className={styles.roleHead}>
-                  {row.roleLabel}
-                  <span className={styles.roleHeadCount}>{row.userCount}</span>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {PERMISSIONS.map((permission) => (
-              <tr key={permission}>
-                <td>
-                  <div className={styles.permissionLabel}>{PERMISSION_LABELS[permission].label}</div>
-                  <div className={styles.permissionSub}>{PERMISSION_LABELS[permission].sub}</div>
-                </td>
-                {(matrix.data ?? []).map((row) => {
-                  const isAdminColumn = row.role === 'ADMIN';
-                  const isOwnColumn = me?.role === row.role;
-                  const locked = isAdminColumn || !gate.can;
-                  const title = isAdminColumn
-                    ? 'Admin always has every permission'
-                    : gate.can
-                      ? undefined
-                      : gate.hint;
-
-                  return (
-                    <td
-                      key={row.role}
-                      className={`${styles.cell} ${isOwnColumn ? styles.ownColumn : ''}`}
-                    >
-                      <input
-                        type="checkbox"
-                        className={styles.checkbox}
-                        checked={isAdminColumn ? true : row.permissions[permission]}
-                        disabled={locked}
-                        aria-disabled={locked || undefined}
-                        aria-label={`${PERMISSION_LABELS[permission].label} for ${row.roleLabel}`}
-                        {...(title ? { title } : {})}
-                        onChange={(event) =>
-                          togglePermission.mutate({
-                            role: row.role,
-                            permission,
-                            next: event.target.checked
-                          })
-                        }
-                      />
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </DataTable>
-
-        <FootNote>
-          Permissions control editing only — every role reads every screen. The Admin group is fixed
-          so the system cannot be locked out.
-        </FootNote>
-      </div>
+      <FootNote>
+        Role groups and what each one may edit live on the Roles &amp; permissions screen.
+      </FootNote>
     </Screen>
   );
 }

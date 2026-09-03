@@ -138,6 +138,63 @@ The screen offers only the moves an operator actually makes. `Draft → Approved
 Neither mutation can change a metre or a cone, so they invalidate the garment and the library
 but deliberately not `garmentCalculation`.
 
+## Responsive, and what it cost
+
+The handoff spec is explicit: *"this is a desktop factory tool with a 1180px minimum width. Do
+not build a mobile layout; below 1180px the content scrolls horizontally. Tables are never
+card-ified."* That was overridden deliberately — the app is now usable from 320px up.
+
+**The sidebar becomes a drawer below 900px.** It keeps its `position: fixed` and slides on
+`transform`, with a scrim over the content, Escape to close, and an automatic close on
+navigation. Above 900px the `menuOpen` flag exists in React but no CSS reads it, so the
+desktop shell is byte-for-byte what it was.
+
+**A row becomes a card below 700px.** `DataTable` copies each `<th>`'s text onto the cells
+beneath it as `data-label`, and `td::before { content: attr(data-label) }` prints it once the
+header row is hidden. Deriving the labels from the table's own headers rather than hand-writing
+~60 `data-label` attributes means a renamed column cannot drift from its stacked label, and a
+table nobody has touched still works. The element stays a real `<table>`.
+
+**`min-width: 0` is the whole trick.** A grid or flex child defaults to `min-width: auto` —
+"never shrink below your content" — so a `.scrollX` wrapper around a wide table grew to the
+table's full width, its ancestors grew with it, and `overflow-x` never engaged. The garment
+detail screen overflowed by 229px on a phone for exactly this reason. `.scrollX` and
+`.sections > *` now opt out of that default.
+
+Verified in a headless browser: **33 checks** — 7 list screens plus 4 detail screens, each at
+1440 / 900 / 390px — assert `scrollWidth === clientWidth` and that no visible button sits
+outside the viewport. Desktop is asserted unchanged in the same run (`display: table-cell`,
+header row visible).
+
+Two things were deliberately not changed: the print sheets (A4 geometry comes from `@page`,
+not the screen) and the operations table's desktop column widths.
+
+## Threads and machine types are editable now
+
+The spec made the thread library read-only — *"New threads are created inline from any thread
+position on an operation"* — and the machine-types screen editable only in its consumption-ratio
+cells. Both now have full create / edit / delete, mirroring the fabric library's form panel.
+Inline thread creation from an operation still works and is still mentioned in the footer.
+
+**Editing a machine type's positions is destructive**, and the UI now says so before you do it.
+The server mints new position ids for the whole array, which clears the thread map of every
+operation on that machine, on every garment. Two guards:
+
+- `MachineTypeDTO` gained `usage: { operations, styles }` so the screen can name the blast
+  radius — "12 operations on 3 styles use Four Thread Overlock" — in a warning inside the form.
+- The client sends `positions` **only when they actually differ** from the stored record.
+  Renaming a machine or changing its colour no longer voids anything.
+
+The colour picker offers exactly the six documented machine colours. The spec says not to
+invent additional colours, so it is a swatch row, not a free hex input.
+
+## Users and roles are two screens
+
+`/users` is accounts — create, change role group, remove, with the last-admin refusal.
+`/roles` is the permission matrix. They were one screen; splitting them keeps each one to a
+single job and gives the matrix room to become a readable stack on a phone. The sidebar lists
+both under ADMINISTRATION. `PERMISSION_LABELS` moved to `Roles.tsx` and is exported from there.
+
 ## Known gaps
 
 - **A failed read leaves the previous rows on screen.** `ErrorNotice` now says so above the

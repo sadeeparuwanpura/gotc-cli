@@ -151,8 +151,17 @@ a:hover {
  * bar and sidebar are `position: fixed`, so they would sit on top of the content instead
  * of travelling with it.
  */
+/**
+ * A wide table scrolls inside its own box; it must never widen the page.
+ *
+ * `min-width: 0` is load-bearing. A grid or flex child defaults to `min-width: auto`, which
+ * means "never shrink below your content" — so without this the scroller grows to the
+ * table's full width, its ancestors grow with it, and `overflow-x` never engages. The
+ * containers below opt their children out of that default for the same reason.
+ */
 .scrollX {
   max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
 }
 

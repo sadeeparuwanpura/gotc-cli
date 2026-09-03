@@ -1,7 +1,47 @@
-import type { ReactNode } from 'react';
+import { useLayoutEffect, useRef, type ReactNode } from 'react';
 import styles from './DataTable.module.css';
 
 export { styles as tableStyles };
+
+/**
+ * Copies each column's header text onto the cells beneath it as `data-label`.
+ *
+ * Below 700px a row stacks into a card and the header row is hidden, so every cell has to
+ * carry its own label — `td::before { content: attr(data-label) }` prints it. Deriving the
+ * labels from the table's own `<th>`s keeps one source of truth: a renamed column cannot
+ * drift from its stacked label, and a table nobody has touched still works.
+ *
+ * A cell that sets its own `data-label` wins, and an actions cell under a blank `<th>` is
+ * left unlabelled on purpose.
+ */
+function useColumnLabels(children: ReactNode): React.RefObject<HTMLTableElement> {
+  const ref = useRef<HTMLTableElement>(null);
+
+  useLayoutEffect(() => {
+    const table = ref.current;
+    if (!table) return;
+
+    const headers = Array.from(table.querySelectorAll('thead th')).map((cell) =>
+      (cell.textContent ?? '').trim()
+    );
+    if (headers.length === 0) return;
+
+    for (const row of Array.from(table.querySelectorAll('tbody tr'))) {
+      const cells = Array.from(row.children);
+      // A cell spanning the row (an empty state) has no single column to name.
+      if (cells.length !== headers.length) continue;
+
+      cells.forEach((cell, index) => {
+        const label = headers[index];
+        if (!label) return;
+        if (cell.getAttribute('data-label') === label) return;
+        cell.setAttribute('data-label', label);
+      });
+    }
+  }, [children]);
+
+  return ref;
+}
 
 interface TableProps {
   children: ReactNode;
@@ -33,10 +73,14 @@ export function DataTable({
     .filter(Boolean)
     .join(' ');
 
+  const ref = useColumnLabels(children);
+
   // Every table gets its own horizontal scroller: a wide one must never widen the page.
   return (
     <div className="scrollX">
-      <table className={classes}>{children}</table>
+      <table ref={ref} className={classes}>
+        {children}
+      </table>
     </div>
   );
 }

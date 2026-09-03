@@ -53,3 +53,154 @@
   display: flex;
   justify-content: flex-end;
 }
+
+/* --- card actions ------------------------------------------------------ */
+
+.headActions {
+  display: flex;
+  gap: var(--gap-4);
+  margin-left: var(--gap-4);
+}
+
+.action {
+  font-size: var(--text-meta-lg);
+  color: var(--accent);
+  padding: 0;
+}
+
+.action:hover:not(:disabled) {
+  text-decoration: underline;
+}
+
+.actionLocked {
+  color: var(--ink-faint);
+}
+
+.cardFoot {
+  padding: var(--gap-3) var(--cell-x-edge);
+  border-top: 1px solid var(--line-3);
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+}
+
+/* --- form -------------------------------------------------------------- */
+
+.identityGrid {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: var(--gap-5);
+}
+
+/* The palette is the six documented machine colours — no new colours are invented. */
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-2);
+}
+
+.swatch {
+  width: 26px;
+  height: 22px;
+  border-radius: var(--radius-small);
+  border: 1px solid var(--line);
+  background: var(--swatch-colour);
+}
+
+.swatchActive {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+
+.colourField {
+  margin-top: var(--gap-5);
+}
+
+.positionsHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-5);
+  margin-top: var(--gap-6);
+  margin-bottom: var(--gap-3);
+}
+
+.positionsTitle {
+  font-size: var(--text-body);
+  font-weight: var(--weight-semibold);
+}
+
+.positionsNote {
+  font-size: var(--text-meta);
+  color: var(--ink-soft);
+}
+
+.positionRow {
+  display: grid;
+  grid-template-columns: 1fr 92px 120px 28px;
+  gap: var(--gap-4);
+  align-items: end;
+  margin-bottom: var(--gap-3);
+}
+
+.removePosition {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+  background: var(--paper);
+  height: 30px;
+  color: var(--ink-soft);
+}
+
+.removePosition:hover:not(:disabled) {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* Editing positions voids every thread assignment on the machine — say so first. */
+.destructive {
+  border: 1px solid var(--warn);
+  background: var(--warn-bg);
+  padding: var(--gap-3) var(--gap-4);
+  font-size: var(--text-dense);
+  line-height: 1.5;
+  margin-top: var(--gap-5);
+}
+
+/* --- responsive -------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .identityGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .head {
+    flex-wrap: wrap;
+    row-gap: var(--gap-2);
+  }
+
+  .threads {
+    margin-left: 0;
+  }
+
+  .headActions {
+    margin-left: auto;
+  }
+
+  .positionRow {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-3);
+    padding-bottom: var(--gap-4);
+    border-bottom: 1px solid var(--line-3);
+  }
+
+  /* The remove button spans the row rather than squeezing into a 28px column. */
+  .removePosition {
+    grid-column: 1 / -1;
+    height: 32px;
+  }
+}
